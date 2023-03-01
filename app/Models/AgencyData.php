@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class AgencyData extends Model
 {
+
+    protected $guarded = [];
+
     use HasFactory;
 
     // one to one relationship (inverse)

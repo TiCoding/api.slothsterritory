@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Reservation extends Model
 {
+
+    protected $guarded = [];
+
     use HasFactory;
 
     // one to many relationship (inverse)

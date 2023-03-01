@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Tour extends Model
 {
+
+    protected $guarded = [];
+
     use HasFactory;
 
     // one to many relationship
@@ -20,6 +23,6 @@ class Tour extends Model
 
     public function agencies()
     {
-        return $this->belongsToMany(Agency::class);
+        return $this->belongsToMany(Agency::class, 'agency_tours');
     }
 }

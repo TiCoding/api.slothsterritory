@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class CustomPrice extends Model
 {
+
+    protected $guarded = [];
+
     use HasFactory;
 
     // one to one relationship (inverse)

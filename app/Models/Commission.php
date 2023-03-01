@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Commission extends Model
 {
+
+    protected $guarded = [];
+
     use HasFactory;
 
     // one to many relationship (inverse)

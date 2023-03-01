@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class PaymentMethod extends Model
 {
+
+    protected $guarded = [];
+
     use HasFactory;
 
     // one to many relationship

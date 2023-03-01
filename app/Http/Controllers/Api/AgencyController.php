@@ -15,7 +15,8 @@ class AgencyController extends Controller
      */
     public function index()
     {
-        //
+        $agencies = Agency::all();
+        return $agencies;
     }
 
     /**
@@ -26,7 +27,23 @@ class AgencyController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:255|unique:agencies',
+            'email' => 'required|string|email|max:255|unique:agencies',
+            'commission_dollars' => 'required|numeric',
+            'commission_percent' => 'required|numeric',
+            'color' => 'required|string|max:255|unique:agencies',
+        ]);
+
+        $agency = Agency::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'commission_dollars' => $request->commission_dollars,
+            'commission_percent' => $request->commission_percent,
+            'color' => $request->color,
+        ]);
+
+        return $agency;
     }
 
     /**
@@ -35,9 +52,11 @@ class AgencyController extends Controller
      * @param  \App\Models\Agency  $agency
      * @return \Illuminate\Http\Response
      */
-    public function show(Agency $agency)
+    public function show($id)
     {
-        //
+        $agency = Agency::include()->findOrFail($id);
+
+        return $agency;
     }
 
     /**
@@ -49,7 +68,17 @@ class AgencyController extends Controller
      */
     public function update(Request $request, Agency $agency)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:255|unique:agencies,name,'.$agency->id,
+            'email' => 'required|string|email|max:255|unique:agencies,email,'.$agency->id,
+            'commission_dollars' => 'required|numeric',
+            'commission_percent' => 'required|numeric',
+            'color' => 'required|string|max:255|unique:agencies,color,'.$agency->id,
+        ]);
+
+        $agency->update($request->all());
+
+        return $agency;
     }
 
     /**
@@ -60,6 +89,9 @@ class AgencyController extends Controller
      */
     public function destroy(Agency $agency)
     {
-        //
+        $agency->delete();
+        return response()->json([
+            'message' => 'Agency deleted successfully'
+        ]);
     }
 }

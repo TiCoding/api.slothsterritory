@@ -40,8 +40,8 @@ Route::post('register', [RegisterController::class, 'store'])->name('api.v1.regi
 // Route::delete('agencies/{agency}', [AgencyController::class, 'destroy'])->name('api.v1.agencies.destroy');
 
 Route::apiResource('agencies', AgencyController::class)->names('api.v1.agencies');
-Route::apiResource('agencies-data', AgencyDataController::class)->names('api.v1.agencies-data');
-Route::apiResource('agencies-tours', AgencyTourController::class)->names('api.v1.agencies-tours');
+Route::apiResource('agency-data', AgencyDataController::class)->names('api.v1.agency-data');
+Route::apiResource('agency-tours', AgencyTourController::class)->names('api.v1.agency-tours');
 Route::apiResource('commissions', CommissionController::class)->names('api.v1.commissions');
 Route::apiResource('custom-dates', CustomDateController::class)->names('api.v1.custom-dates');
 Route::apiResource('customers', CustomerController::class)->names('api.v1.customers');
