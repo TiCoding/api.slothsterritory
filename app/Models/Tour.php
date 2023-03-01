@@ -8,4 +8,18 @@ use Illuminate\Database\Eloquent\Model;
 class Tour extends Model
 {
     use HasFactory;
+
+    // one to many relationship
+
+    public function schedules()
+    {
+        return $this->hasMany(Schedule::class);
+    }
+
+    // many to many relationship (inverse)
+
+    public function agencies()
+    {
+        return $this->belongsToMany(Agency::class);
+    }
 }

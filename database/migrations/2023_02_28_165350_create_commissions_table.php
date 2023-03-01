@@ -19,7 +19,7 @@ class CreateCommissionsTable extends Migration
             $table->decimal('amount_colones', 8, 2);
 
             $table->foreignId('payment_status_id')->constrained()->onDelete('restrict');
-            $table->foreignId('reservation_id')->constrained()->onDelete('restrict');
+            $table->foreignId('reservation_id')->unique()->constrained()->onDelete('restrict');
 
             $table->timestamps();
         });

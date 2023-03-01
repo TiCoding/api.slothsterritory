@@ -21,6 +21,8 @@ class CreateSchedulesTable extends Migration
 
             $table->foreignId('tour_id')->constrained('tours')->onDelete('restrict');
 
+            $table->unique(['schedule', 'tour_id']);
+
             $table->timestamps();
         });
     }

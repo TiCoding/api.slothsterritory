@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Schedule extends Model
 {
     use HasFactory;
+
+    // one to many relationship (inverse)
+
+    public function tour()
+    {
+        return $this->belongsTo(Tour::class);
+    }
 }

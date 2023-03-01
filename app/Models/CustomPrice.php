@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class CustomPrice extends Model
 {
     use HasFactory;
+
+    // one to one relationship (inverse)
+
+    public function customDate()
+    {
+        return $this->belongsTo(CustomDate::class);
+    }
 }

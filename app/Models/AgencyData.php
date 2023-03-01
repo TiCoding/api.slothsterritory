@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class AgencyData extends Model
 {
     use HasFactory;
+
+    // one to one relationship (inverse)
+
+    public function reservation()
+    {
+        return $this->belongsTo(Reservation::class);
+    }
 }

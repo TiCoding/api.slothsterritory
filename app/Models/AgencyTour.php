@@ -5,16 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Role extends Model
+class AgencyTour extends Model
 {
     use HasFactory;
 
-
     // one to many relationship
 
-    public function users()
+    public function customDates()
     {
-        return $this->hasMany(User::class);
+        return $this->hasMany(CustomDate::class);
     }
-
 }

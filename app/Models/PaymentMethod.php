@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class PaymentMethod extends Model
 {
     use HasFactory;
+
+    // one to many relationship
+
+    public function payments()
+    {
+        return $this->hasMany(Payment::class);
+    }
 }

@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Customer extends Model
 {
     use HasFactory;
+
+    // one to many relationship
+
+    public function reservations()
+    {
+        return $this->hasMany(Reservation::class);
+    }
 }

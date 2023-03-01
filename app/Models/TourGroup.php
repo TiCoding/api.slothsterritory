@@ -8,4 +8,17 @@ use Illuminate\Database\Eloquent\Model;
 class TourGroup extends Model
 {
     use HasFactory;
+
+    // one to many relationship (inverse)
+
+    public function guide()
+    {
+        return $this->belongsTo(Guide::class);
+    }
+
+    // one to one relationship
+
+    public function reservation(){
+        return $this->hasOne(Reservation::class);
+    }
 }
