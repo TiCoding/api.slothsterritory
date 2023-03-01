@@ -18,7 +18,7 @@ class CreateCustomDatesTable extends Migration
             $table->date('start_date')->unique()->index();
             $table->date('end_date')->unique()->index();
 
-            $table->foreignId('agency_tour_id')->constrained('agency_tour')->onDelete('restrict');
+            $table->foreignId('agency_tour_id')->constrained('agency_tours')->onDelete('restrict');
 
             $table->timestamps();
         });

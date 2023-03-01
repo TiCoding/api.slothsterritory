@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAgencyTourTable extends Migration
+class CreateAgencyToursTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateAgencyTourTable extends Migration
      */
     public function up()
     {
-        Schema::create('agency_tour', function (Blueprint $table) {
+        Schema::create('agency_tours', function (Blueprint $table) {
             $table->id();
             $table->decimal('adult_price', 8, 2);
             $table->decimal('child_price', 8, 2);
