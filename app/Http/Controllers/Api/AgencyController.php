@@ -15,7 +15,10 @@ class AgencyController extends Controller
      */
     public function index()
     {
-        $agencies = Agency::all();
+        $agencies = Agency::include()
+                            ->filter()
+                            ->sort()
+                            ->getOrPaginate();
         return $agencies;
     }
 
