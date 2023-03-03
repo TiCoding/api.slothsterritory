@@ -45,6 +45,7 @@ class Reservation extends Model
         'reservationStatus',
         'tour',
         'tourGroup',
+        'tourGroup.guide',
         'tour.schedules',
         'agency.tours',
         'agency.agencyTours',

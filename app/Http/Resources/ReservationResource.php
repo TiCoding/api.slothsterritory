@@ -47,6 +47,7 @@ class ReservationResource extends JsonResource
             'reservationStatus' => ReservationStatusResource::make($this->whenLoaded('reservationStatus')),
             'tour' => TourResource::make($this->whenLoaded('tour')),
             'tourGroup' => TourGroupResource::make($this->whenLoaded('tourGroup')),
+            'tourGroup.guide' => GuideResource::make($this->whenLoaded('tourGroup.guide')),
             'tour.schedules' => ScheduleResource::collection($this->whenLoaded('tour.schedules')),
             'agency.tours' => TourResource::collection($this->whenLoaded('agency.tours')),
             'agency.agencyTours' => AgencyTourResource::collection($this->whenLoaded('agency.agencyTours')),
