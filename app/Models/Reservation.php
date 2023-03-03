@@ -5,12 +5,124 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+use App\Traits\ApiTrait;
+
 class Reservation extends Model
 {
 
-    protected $guarded = [];
+    protected $fillable = [
+        'amount_adults',
+        'amount_children',
+        'amount_children_free',
+        'total_price_dollars',
+        'total_price_colones',
+        'discount_dollars',
+        'discount_colones',
+        'taxes_dollars',
+        'taxes_colones',
+        'net_price_dollars',
+        'net_price_colones',
+        'invoice',
+        'comments',
+        'date',
+        'adults_price_dollars',
+        'adults_price_colones',
+        'child_price_dollars',
+        'child_price_colones',
+        'schedule',
+        'agency_id',
+        'customer_id',
+        'payment_status_id',
+        'reservation_status_id',
+        'tour_id',
+        'tour_group_id',
+    ];
 
-    use HasFactory;
+    protected $allowInclude = [
+        'agency',
+        'customer',
+        'paymentStatus',
+        'reservationStatus',
+        'tour',
+        'tourGroup',
+        'tour.schedules',
+        'agency.tours',
+        'agency.agencyTours',
+        'agency.agencyTours.customDates',
+        'agency.agencyTours.customDates.customPrice',
+        'agency.agencyTours.customDates.customSchedules',
+        'payments',
+        'payments.paymentMethod',
+        'payments.paymentType',
+        'agencyData',
+        'fee',
+        'fee.paymentStatus',
+        'fee.payments',
+        'commission',
+        'commission.paymentStatus',
+        'commission.payments',
+
+    ];
+
+    protected $allowFilter = [
+        'id',
+        'amount_adults',
+        'amount_children',
+        'amount_children_free',
+        'total_price_dollars',
+        'total_price_colones',
+        'discount_dollars',
+        'discount_colones',
+        'taxes_dollars',
+        'taxes_colones',
+        'net_price_dollars',
+        'net_price_colones',
+        'invoice',
+        'comments',
+        'date',
+        'adults_price_dollars',
+        'adults_price_colones',
+        'child_price_dollars',
+        'child_price_colones',
+        'schedule',
+        'agency_id',
+        'customer_id',
+        'payment_status_id',
+        'reservation_status_id',
+        'tour_id',
+        'tour_group_id',
+    ];
+
+    protected $allowSort = [
+        'id',
+        'amount_adults',
+        'amount_children',
+        'amount_children_free',
+        'total_price_dollars',
+        'total_price_colones',
+        'discount_dollars',
+        'discount_colones',
+        'taxes_dollars',
+        'taxes_colones',
+        'net_price_dollars',
+        'net_price_colones',
+        'invoice',
+        'comments',
+        'date',
+        'adults_price_dollars',
+        'adults_price_colones',
+        'child_price_dollars',
+        'child_price_colones',
+        'schedule',
+        'agency_id',
+        'customer_id',
+        'payment_status_id',
+        'reservation_status_id',
+        'tour_id',
+        'tour_group_id',
+    ];
+
+    use HasFactory, ApiTrait;
 
     // one to many relationship (inverse)
 
@@ -54,10 +166,16 @@ class Reservation extends Model
         return $this->hasOne(AgencyData::class);
     }
 
-    // one to one relationship
+    // one to many relationship (inverse)
+
+    public function tour(){
+        return $this->belongsTo(Tour::class);
+    }
+
+    // one to many relationship (inverse)
 
     public function tourGroup(){
-        return $this->hasOne(TourGroup::class);
+        return $this->belongsTo(TourGroup::class);
     }
 
     // one to many polymorphic relationship

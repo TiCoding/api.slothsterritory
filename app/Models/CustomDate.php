@@ -5,12 +5,41 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+use App\Traits\ApiTrait;
+
 class CustomDate extends Model
 {
 
-    protected $guarded = [];
+    protected $fillable = [
+        'start_date',
+        'end_date',
+        'agency_tour_id',
+    ];
 
-    use HasFactory;
+    protected $allowInclude = [
+        'customPrice',
+        'customSchedules',
+        'agencyTour',
+        'agencyTour.tour',
+        'agencyTour.agency',
+        'agencyTour.agency.reservations',
+    ];
+
+    protected $allowFilter = [
+        'id',
+        'start_date',
+        'end_date',
+        'agency_tour_id',
+    ];
+
+    protected $allowSort = [
+        'id',
+        'start_date',
+        'end_date',
+        'agency_tour_id',
+    ];
+
+    use HasFactory, ApiTrait;
 
     // one to one relationship
 

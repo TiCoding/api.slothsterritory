@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\PaymentResource;
 use App\Models\Payment;
 use Illuminate\Http\Request;
 
@@ -15,7 +16,11 @@ class PaymentController extends Controller
      */
     public function index()
     {
-        //
+        $payments = Payment::include()
+                            ->filter()
+                            ->sort()
+                            ->getOrPaginate();
+        return PaymentResource::collection($payments);
     }
 
     /**
@@ -35,9 +40,10 @@ class PaymentController extends Controller
      * @param  \App\Models\Payment  $payment
      * @return \Illuminate\Http\Response
      */
-    public function show(Payment $payment)
+    public function show($id)
     {
-        //
+        $payment = Payment::include()->findOrFail($id);
+        return PaymentResource::make($payment);
     }
 
     /**

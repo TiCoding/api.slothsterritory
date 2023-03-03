@@ -42,6 +42,8 @@ class CreateReservationsTable extends Migration
             $table->foreignId('tour_id')->constrained()->onDelete('restrict');
             $table->foreignId('tour_group_id')->constrained()->onDelete('restrict');
 
+            $table->boolean('deleted')->default(false);
+
 
             $table->timestamps();
         });

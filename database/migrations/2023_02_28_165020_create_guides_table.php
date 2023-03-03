@@ -18,6 +18,7 @@ class CreateGuidesTable extends Migration
             $table->string('name')->index();
 
             $table->foreignId('guide_status_id')->constrained('guide_statuses')->onDelete('restrict');
+            $table->boolean('deleted')->default(false);
 
             $table->timestamps();
         });

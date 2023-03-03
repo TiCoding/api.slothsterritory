@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\AgencyResource;
 use App\Models\Agency;
 use Illuminate\Http\Request;
 
@@ -19,7 +20,7 @@ class AgencyController extends Controller
                             ->filter()
                             ->sort()
                             ->getOrPaginate();
-        return $agencies;
+        return AgencyResource::collection($agencies);
     }
 
     /**
@@ -46,7 +47,7 @@ class AgencyController extends Controller
             'color' => $request->color,
         ]);
 
-        return $agency;
+        return AgencyResource::make($agency);
     }
 
     /**
@@ -59,7 +60,7 @@ class AgencyController extends Controller
     {
         $agency = Agency::include()->findOrFail($id);
 
-        return $agency;
+        return AgencyResource::make($agency);
     }
 
     /**
@@ -81,7 +82,7 @@ class AgencyController extends Controller
 
         $agency->update($request->all());
 
-        return $agency;
+        return AgencyResource::make($agency);
     }
 
     /**

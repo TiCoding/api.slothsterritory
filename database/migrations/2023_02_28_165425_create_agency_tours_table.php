@@ -23,6 +23,7 @@ class CreateAgencyToursTable extends Migration
             $table->foreignId('tour_id')->constrained('tours')->onDelete('restrict');
 
             $table->unique(['agency_id', 'tour_id']);
+            $table->boolean('deleted')->default(false);
 
             $table->timestamps();
         });

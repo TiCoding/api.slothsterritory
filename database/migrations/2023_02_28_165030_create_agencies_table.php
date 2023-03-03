@@ -20,6 +20,7 @@ class CreateAgenciesTable extends Migration
             $table->decimal('commission_percent', 5, 2)->default(0.00);
             $table->string('color')->unique();
             $table->string('email')->unique()->index();
+            $table->boolean('deleted')->default(false);
             $table->timestamps();
         });
     }
