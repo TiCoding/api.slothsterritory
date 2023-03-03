@@ -93,7 +93,7 @@ class AgencyController extends Controller
      */
     public function destroy(Agency $agency)
     {
-        $agency->delete();
+        $agency->update(['deleted_at' => now()]);
         return response()->json([
             'message' => 'Agency deleted successfully'
         ]);

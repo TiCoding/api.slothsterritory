@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\RoleResource;
 use App\Models\Role;
 use Illuminate\Http\Request;
 
@@ -15,7 +16,11 @@ class RoleController extends Controller
      */
     public function index()
     {
-        //
+        $roles = Role::include()
+                        ->filter()
+                        ->sort()
+                        ->getOrPaginate();
+        return RoleResource::collection($roles);
     }
 
     /**
@@ -26,7 +31,13 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|unique:roles'
+        ]);
+
+        $role = Role::create($request->all());
+
+        return RoleResource::make($role);
     }
 
     /**
@@ -35,9 +46,10 @@ class RoleController extends Controller
      * @param  \App\Models\Role  $role
      * @return \Illuminate\Http\Response
      */
-    public function show(Role $role)
+    public function show($id)
     {
-        //
+        $role = Role::include()->findOrFail($id);
+        return RoleResource::make($role);
     }
 
     /**
@@ -49,7 +61,13 @@ class RoleController extends Controller
      */
     public function update(Request $request, Role $role)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|unique:roles,name' . $role->id
+        ]);
+
+        $role->update($request->all());
+
+        return RoleResource::make($role);
     }
 
     /**
@@ -60,6 +78,9 @@ class RoleController extends Controller
      */
     public function destroy(Role $role)
     {
-        //
+        $role->update(['deleted_at' => now()]);
+        return response()->json([
+            'message' => 'Deleted successfully'
+        ]);
     }
 }

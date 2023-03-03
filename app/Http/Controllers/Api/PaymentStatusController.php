@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\PaymentStatusResource;
 use App\Models\PaymentStatus;
 use Illuminate\Http\Request;
 
@@ -15,7 +16,12 @@ class PaymentStatusController extends Controller
      */
     public function index()
     {
-        //
+        $paymentStatuses = PaymentStatus::include()
+                                        ->filter()
+                                        ->sort()
+                                        ->getOrPaginate();
+        return PaymentStatusResource::collection($paymentStatuses);
+
     }
 
     /**
@@ -26,7 +32,13 @@ class PaymentStatusController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|unique:payment_statuses'
+        ]);
+
+        $paymentStatus = PaymentStatus::create($request->all());
+
+        return PaymentStatusResource::make($paymentStatus);
     }
 
     /**
@@ -35,9 +47,10 @@ class PaymentStatusController extends Controller
      * @param  \App\Models\PaymentStatus  $paymentStatus
      * @return \Illuminate\Http\Response
      */
-    public function show(PaymentStatus $paymentStatus)
+    public function show($id)
     {
-        //
+        $paymentStatus = PaymentStatus::include()->findOrFail($id);
+        return PaymentStatusResource::make($paymentStatus);
     }
 
     /**
@@ -49,7 +62,13 @@ class PaymentStatusController extends Controller
      */
     public function update(Request $request, PaymentStatus $paymentStatus)
     {
-        //
+        $request->validate([
+            'name' => 'required|unique:payment_statuses,name,' . $paymentStatus->id
+        ]);
+
+        $paymentStatus->update($request->all());
+
+        return PaymentStatusResource::make($paymentStatus);
     }
 
     /**
@@ -60,6 +79,9 @@ class PaymentStatusController extends Controller
      */
     public function destroy(PaymentStatus $paymentStatus)
     {
-        //
+        $paymentStatus->update(['deleted_at' => now()]);
+        return response()->json([
+            'message' => 'Deleted successfully'
+        ]);
     }
 }

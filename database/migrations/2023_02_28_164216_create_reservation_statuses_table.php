@@ -16,7 +16,7 @@ class CreateReservationStatusesTable extends Migration
         Schema::create('reservation_statuses', function (Blueprint $table) {
             $table->id();
             $table->string('name')->unique();
-            $table->boolean('deleted')->default(false);
+            $table->date('deleted_at')->nullable();
             $table->timestamps();
         });
     }

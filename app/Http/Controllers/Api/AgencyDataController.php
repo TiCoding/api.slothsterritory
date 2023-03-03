@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\AgencyDataResource;
 use App\Models\AgencyData;
 use Illuminate\Http\Request;
 
@@ -15,7 +16,11 @@ class AgencyDataController extends Controller
      */
     public function index()
     {
-        //
+        $agencyData = AgencyData::include()
+                            ->filter()
+                            ->sort()
+                            ->getOrPaginate();
+        return AgencyDataResource::collection($agencyData);
     }
 
     /**
@@ -26,7 +31,14 @@ class AgencyDataController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'agent_name' => 'required|string|max:255',
+            'reservation_id' => 'required|integer|exists:reservations,id',
+        ]);
+
+        $agencyData = AgencyData::create($request->all());
+
+        return AgencyDataResource::make($agencyData);
     }
 
     /**
@@ -35,9 +47,10 @@ class AgencyDataController extends Controller
      * @param  \App\Models\AgencyData  $agencyData
      * @return \Illuminate\Http\Response
      */
-    public function show(AgencyData $agencyData)
+    public function show($id)
     {
-        //
+        $agencyData = AgencyData::include()->findOrFail($id);
+        return AgencyDataResource::make($agencyData);
     }
 
     /**
@@ -49,7 +62,14 @@ class AgencyDataController extends Controller
      */
     public function update(Request $request, AgencyData $agencyData)
     {
-        //
+        $request->validate([
+            'agent_name' => 'required|string|max:255',
+            'reservation_id' => 'required|integer|exists:reservations,id',
+        ]);
+
+        $agencyData->update($request->all());
+
+        return AgencyDataResource::make($agencyData);
     }
 
     /**
@@ -60,6 +80,9 @@ class AgencyDataController extends Controller
      */
     public function destroy(AgencyData $agencyData)
     {
-        //
+        $agencyData->update(['deleted_at' => now()]);
+        return response()->json([
+            'message' => 'Deleted successfully'
+        ]);
     }
 }

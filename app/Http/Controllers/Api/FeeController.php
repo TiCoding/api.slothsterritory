@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\FeeResource;
 use App\Models\Fee;
 use Illuminate\Http\Request;
 
@@ -15,7 +16,11 @@ class FeeController extends Controller
      */
     public function index()
     {
-        //
+        $fees = Fee::include()
+                    ->filter()
+                    ->sort()
+                    ->getOrPaginate();
+        return FeeResource::collection($fees);
     }
 
     /**
@@ -26,7 +31,16 @@ class FeeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'amount_dollars' => 'required|numeric',
+            'amount_colones' => 'required|numeric',
+            'payment_status_id' => 'required|integer|exists:payment_status,id',
+            'reservation_id' => 'required|integer|unique:fees|exists:reservations,id',
+        ]);
+
+        $fee = Fee::create($request->all());
+
+        return FeeResource::make($fee);
     }
 
     /**
@@ -35,9 +49,10 @@ class FeeController extends Controller
      * @param  \App\Models\Fee  $fee
      * @return \Illuminate\Http\Response
      */
-    public function show(Fee $fee)
+    public function show($id)
     {
-        //
+        $fee = Fee::include()->findOrFail($id);
+        return FeeResource::make($fee);
     }
 
     /**
@@ -49,7 +64,16 @@ class FeeController extends Controller
      */
     public function update(Request $request, Fee $fee)
     {
-        //
+        $request->validate([
+            'amount_dollars' => 'required|numeric',
+            'amount_colones' => 'required|numeric',
+            'payment_status_id' => 'required|integer|exists:payment_status,id',
+            'reservation_id' => 'required|integer|unique:fees,reservation_id|exists:reservations,id'.$fee->id,
+        ]);
+
+        $fee->update($request->all());
+
+        return FeeResource::make($fee);
     }
 
     /**
@@ -60,6 +84,9 @@ class FeeController extends Controller
      */
     public function destroy(Fee $fee)
     {
-        //
+        $fee->update(['deleted_at' => now()]);
+        return response()->json([
+            'message' => 'Deleted successfully'
+        ]);
     }
 }

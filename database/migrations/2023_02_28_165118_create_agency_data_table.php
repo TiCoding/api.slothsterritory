@@ -18,7 +18,7 @@ class CreateAgencyDataTable extends Migration
             $table->string('agent_name');
 
             $table->foreignId('reservation_id')->unique()->constrained('reservations')->onDelete('restrict');
-            $table->boolean('deleted')->default(false);
+            $table->date('deleted_at')->nullable();
 
             $table->timestamps();
         });

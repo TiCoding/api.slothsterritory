@@ -15,14 +15,14 @@ class CreateSchedulesTable extends Migration
     {
         Schema::create('schedules', function (Blueprint $table) {
             $table->id();
-            $table->time('schedule');
+            $table->time('schedule')->unique();
             $table->integer('capacity');
             $table->time('deadline_hour');
 
             $table->foreignId('tour_id')->constrained('tours')->onDelete('restrict');
 
             $table->unique(['schedule', 'tour_id']);
-            $table->boolean('deleted')->default(false);
+            $table->date('deleted_at')->nullable();
 
             $table->timestamps();
         });

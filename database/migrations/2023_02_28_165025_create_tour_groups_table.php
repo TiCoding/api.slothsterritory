@@ -18,7 +18,7 @@ class CreateTourGroupsTable extends Migration
             $table->string('name');
 
             $table->foreignId('guide_id')->constrained('guides')->onDelete('restrict');
-            $table->boolean('deleted')->default(false);
+            $table->date('deleted_at')->nullable();
 
             $table->timestamps();
         });

@@ -19,7 +19,7 @@ class CreateCustomPricesTable extends Migration
             $table->decimal('child_price', 8, 2);
 
             $table->foreignId('custom_date_id')->unique()->constrained('custom_dates')->onDelete('restrict');
-            $table->boolean('deleted')->default(false);
+            $table->date('deleted_at')->nullable();
 
             $table->timestamps();
         });

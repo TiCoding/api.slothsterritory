@@ -31,7 +31,20 @@ class PaymentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'dollar_amount' => 'required|numeric',
+            'colones_amount' => 'required|numeric',
+            'payment_date' => 'required|date',
+            'path_file' => 'required|string',
+            'paymentable_id' => 'required|integer',
+            'paymentable_type' => 'required|string',
+            'payment_method_id' => 'required|integer|exists:payment_methods,id',
+            'payment_type_id' => 'required|integer|exists:payment_types,id',
+        ]);
+
+        $payment = Payment::create($request->all());
+
+        return PaymentResource::make($payment);
     }
 
     /**
@@ -55,7 +68,20 @@ class PaymentController extends Controller
      */
     public function update(Request $request, Payment $payment)
     {
-        //
+        $request->validate([
+            'dollar_amount' => 'required|numeric',
+            'colones_amount' => 'required|numeric',
+            'payment_date' => 'required|date',
+            'path_file' => 'required|string',
+            'paymentable_id' => 'required|integer',
+            'paymentable_type' => 'required|string',
+            'payment_method_id' => 'required|integer|exists:payment_methods,id',
+            'payment_type_id' => 'required|integer|exists:payment_types,id',
+        ]);
+
+        $payment->update($request->all());
+
+        return PaymentResource::make($payment);
     }
 
     /**
@@ -66,6 +92,9 @@ class PaymentController extends Controller
      */
     public function destroy(Payment $payment)
     {
-        //
+        $payment->update(['deleted_at' => now()]);
+        return response()->json([
+            'message' => 'Deleted successfully'
+        ]);
     }
 }
