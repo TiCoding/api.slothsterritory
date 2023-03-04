@@ -14,7 +14,7 @@ class CustomDateFactory extends Factory
      */
     public function definition()
     {
-        $startDate = $this->faker->dateTimeBetween('now', '+1 month');
+        $startDate = $this->faker->dateTimeBetween();
         $endDate = $this->faker->dateTimeBetween($startDate, '+1 month');
         $agencyTour = AgencyTour::all()->random();
 

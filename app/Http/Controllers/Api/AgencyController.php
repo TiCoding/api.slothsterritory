@@ -9,6 +9,12 @@ use Illuminate\Http\Request;
 
 class AgencyController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth:api');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -31,6 +37,7 @@ class AgencyController extends Controller
      */
     public function store(Request $request)
     {
+
         $request->validate([
             'name' => 'required|string|max:255|unique:agencies',
             'email' => 'required|string|email|max:255|unique:agencies',
