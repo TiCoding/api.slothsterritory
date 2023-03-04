@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\AgencyTourResource;
 use App\Models\AgencyTour;
 use Illuminate\Http\Request;
 
@@ -15,7 +16,11 @@ class AgencyTourController extends Controller
      */
     public function index()
     {
-        //
+        $agencyTours = AgencyTour::include()
+                            ->filter()
+                            ->sort()
+                            ->getOrPaginate();
+        return AgencyTourResource::collection($agencyTours);
     }
 
     /**
@@ -26,7 +31,16 @@ class AgencyTourController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'adult_price' => 'required|numeric',
+            'child_price' => 'required|numeric',
+            'tour_id' => 'required|integer|exists:tour,id',
+            'agency_id' => 'required|integer|exists:agency,id',
+        ]);
+
+        $agencyTour = AgencyTour::create($request->all());
+
+        return AgencyTourResource::make($agencyTour);
     }
 
     /**
@@ -35,9 +49,10 @@ class AgencyTourController extends Controller
      * @param  \App\Models\AgencyTour  $agencyTour
      * @return \Illuminate\Http\Response
      */
-    public function show(AgencyTour $agencyTour)
+    public function show($id)
     {
-        //
+        $agencyTour = AgencyTour::include()->findOrFail($id);
+        return AgencyTourResource::make($agencyTour);
     }
 
     /**
@@ -49,7 +64,16 @@ class AgencyTourController extends Controller
      */
     public function update(Request $request, AgencyTour $agencyTour)
     {
-        //
+        $request->validate([
+            'adult_price' => 'required|numeric',
+            'child_price' => 'required|numeric',
+            'tour_id' => 'required|integer|exists:tour,id',
+            'agency_id' => 'required|integer|exists:agency,id',
+        ]);
+
+        $agencyTour->update($request->all());
+
+        return AgencyTourResource::make($agencyTour);
     }
 
     /**
@@ -60,6 +84,9 @@ class AgencyTourController extends Controller
      */
     public function destroy(AgencyTour $agencyTour)
     {
-        //
+        $agencyTour->update(['deleted_at' => now()]);
+        return response()->json([
+            'message' => 'Deleted successfully'
+        ]);
     }
 }

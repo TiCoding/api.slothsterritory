@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\GuideResource;
 use App\Models\Guide;
 use Illuminate\Http\Request;
 
@@ -15,7 +16,11 @@ class GuideController extends Controller
      */
     public function index()
     {
-        //
+        $guides = Guide::include()
+                        ->filter()
+                        ->sort()
+                        ->getOrPaginate();
+        return GuideResource::collection($guides);
     }
 
     /**
@@ -26,7 +31,14 @@ class GuideController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|string',
+            'guide_status_id' =>    'required|integer|exists:guide_status,id',
+        ]);
+
+        $guide = Guide::create($request->all());
+
+        return GuideResource::make($guide);
     }
 
     /**
@@ -35,9 +47,10 @@ class GuideController extends Controller
      * @param  \App\Models\Guide  $guide
      * @return \Illuminate\Http\Response
      */
-    public function show(Guide $guide)
+    public function show($id)
     {
-        //
+        $guide = Guide::include()->findOrFail($id);
+        return GuideResource::make($guide);
     }
 
     /**
@@ -49,7 +62,14 @@ class GuideController extends Controller
      */
     public function update(Request $request, Guide $guide)
     {
-        //
+        $request->validate([
+            'name' => 'required|string',
+            'guide_status_id' => 'required|integer|exists:guide_status,id',
+        ]);
+
+        $guide->update($request->all());
+
+        return GuideResource::make($guide);
     }
 
     /**
@@ -60,6 +80,9 @@ class GuideController extends Controller
      */
     public function destroy(Guide $guide)
     {
-        //
+        $guide->update(['deleted_at' => now()]);
+        return response()->json([
+            'message' => 'Deleted successfully'
+        ]);
     }
 }

@@ -3,11 +3,18 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\AgencyResource;
 use App\Models\Agency;
 use Illuminate\Http\Request;
 
 class AgencyController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth:api');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -15,8 +22,11 @@ class AgencyController extends Controller
      */
     public function index()
     {
-        $agencies = Agency::all();
-        return $agencies;
+        $agencies = Agency::include()
+                            ->filter()
+                            ->sort()
+                            ->getOrPaginate();
+        return AgencyResource::collection($agencies);
     }
 
     /**
@@ -27,6 +37,7 @@ class AgencyController extends Controller
      */
     public function store(Request $request)
     {
+
         $request->validate([
             'name' => 'required|string|max:255|unique:agencies',
             'email' => 'required|string|email|max:255|unique:agencies',
@@ -43,7 +54,7 @@ class AgencyController extends Controller
             'color' => $request->color,
         ]);
 
-        return $agency;
+        return AgencyResource::make($agency);
     }
 
     /**
@@ -56,7 +67,7 @@ class AgencyController extends Controller
     {
         $agency = Agency::include()->findOrFail($id);
 
-        return $agency;
+        return AgencyResource::make($agency);
     }
 
     /**
@@ -78,7 +89,7 @@ class AgencyController extends Controller
 
         $agency->update($request->all());
 
-        return $agency;
+        return AgencyResource::make($agency);
     }
 
     /**
@@ -89,7 +100,7 @@ class AgencyController extends Controller
      */
     public function destroy(Agency $agency)
     {
-        $agency->delete();
+        $agency->update(['deleted_at' => now()]);
         return response()->json([
             'message' => 'Agency deleted successfully'
         ]);

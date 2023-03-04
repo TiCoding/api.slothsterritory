@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\CustomScheduleResource;
 use App\Models\CustomSchedule;
 use Illuminate\Http\Request;
 
@@ -15,7 +16,11 @@ class CustomScheduleController extends Controller
      */
     public function index()
     {
-        //
+        $customSchedules = CustomSchedule::include()
+                            ->filter()
+                            ->sort()
+                            ->getOrPaginate();
+        return CustomScheduleResource::collection($customSchedules);
     }
 
     /**
@@ -26,7 +31,16 @@ class CustomScheduleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'schedule' => 'required',
+            'capacity' => 'required|integer',
+            'deadline_hour' => 'required',
+            'custom_date_id' => 'required|integer|exists:custom_dates,id|unique:custom_schedules',
+        ]);
+
+        $customSchedule = CustomSchedule::create($request->all());
+
+        return CustomScheduleResource::make($customSchedule);
     }
 
     /**
@@ -35,9 +49,10 @@ class CustomScheduleController extends Controller
      * @param  \App\Models\CustomSchedule  $customSchedule
      * @return \Illuminate\Http\Response
      */
-    public function show(CustomSchedule $customSchedule)
+    public function show($id)
     {
-        //
+        $customSchedule = CustomSchedule::include()->findOrFail($id);
+        return CustomScheduleResource::make($customSchedule);
     }
 
     /**
@@ -49,7 +64,16 @@ class CustomScheduleController extends Controller
      */
     public function update(Request $request, CustomSchedule $customSchedule)
     {
-        //
+        $request->validate([
+            'schedule' => 'required',
+            'capacity' => 'required|integer',
+            'deadline_hour' => 'required',
+            'custom_date_id' => 'required|integer|exists:custom_dates,id|unique:custom_schedules,custom_date_id,'.$customSchedule->id,
+        ]);
+
+        $customSchedule->update($request->all());
+
+        return CustomScheduleResource::make($customSchedule);
     }
 
     /**
@@ -60,6 +84,9 @@ class CustomScheduleController extends Controller
      */
     public function destroy(CustomSchedule $customSchedule)
     {
-        //
+        $customSchedule->update(['deleted_at' => now()]);
+        return response()->json([
+            'message' => 'Deleted successfully'
+        ]);
     }
 }

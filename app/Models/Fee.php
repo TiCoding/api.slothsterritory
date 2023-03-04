@@ -5,12 +5,43 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+use App\Traits\ApiTrait;
+
 class Fee extends Model
 {
 
-    protected $guarded = [];
+    protected $fillable = [
+        'amount_dollars',
+        'amount_colones',
+        'reservation_id',
+        'payment_status_id',
+    ];
 
-    use HasFactory;
+    protected $allowInclude = [
+        'reservation',
+        'paymentStatus',
+        'payments',
+        'payments.paymentMethod',
+        'payments.paymentType',
+    ];
+
+    protected $allowFilter = [
+        'id',
+        'amount_dollars',
+        'amount_colones',
+        'reservation_id',
+        'payment_status_id',
+    ];
+
+    protected $allowSort = [
+        'id',
+        'amount_dollars',
+        'amount_colones',
+        'reservation_id',
+        'payment_status_id',
+    ];
+
+    use HasFactory, ApiTrait;
 
     // one to many relationship (inverse)
 

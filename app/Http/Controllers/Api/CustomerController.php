@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\CustomerResource;
 use App\Models\Customer;
 use Illuminate\Http\Request;
 
@@ -15,7 +16,11 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        //
+        $customers = Customer::include()
+                                ->filter()
+                                ->sort()
+                                ->getOrPaginate();
+        return CustomerResource::collection($customers);
     }
 
     /**
@@ -26,7 +31,15 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|string',
+            'email' => 'required|string|email|max:255|unique:customers',
+            'phone' => 'string|max:25',
+        ]);
+
+        $customer = Customer::create($request->all());
+
+        return CustomerResource::make($customer);
     }
 
     /**
@@ -35,9 +48,10 @@ class CustomerController extends Controller
      * @param  \App\Models\Customer  $customer
      * @return \Illuminate\Http\Response
      */
-    public function show(Customer $customer)
+    public function show($id)
     {
-        //
+        $customer = Customer::include()->findOrFail($id);
+        return CustomerResource::make($customer);
     }
 
     /**
@@ -49,7 +63,15 @@ class CustomerController extends Controller
      */
     public function update(Request $request, Customer $customer)
     {
-        //
+        $request->validate([
+            'name' => 'required|string',
+            'email' => 'required|string|email|max:255|unique:customers,email,'.$customer->id,
+            'phone' => 'string|max:25',
+        ]);
+
+        $customer->update($request->all());
+
+        return CustomerResource::make($customer);
     }
 
     /**
@@ -60,6 +82,9 @@ class CustomerController extends Controller
      */
     public function destroy(Customer $customer)
     {
-        //
+        $customer->update(['deleted_at' => now()]);
+        return response()->json([
+            'message' => 'Deleted successfully'
+        ]);
     }
 }

@@ -61,7 +61,7 @@ class DatabaseSeeder extends Seeder
         //     'tour_id' => 1,
         // ]);
         AgencyTour::factory(3)->create();
-        CustomDate::factory(3)->create();
+        CustomDate::factory(5)->create();
         CustomSchedule::factory(3)->create();
         CustomPrice::factory(1)->create();
 

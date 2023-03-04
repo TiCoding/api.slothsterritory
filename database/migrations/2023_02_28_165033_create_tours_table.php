@@ -18,6 +18,7 @@ class CreateToursTable extends Migration
             $table->string('name')->unique();
             $table->text('description');
             $table->string('path_image');
+            $table->date('deleted_at')->nullable();
 
             $table->timestamps();
         });

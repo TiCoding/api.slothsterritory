@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\CustomPriceResource;
 use App\Models\CustomPrice;
 use Illuminate\Http\Request;
 
@@ -15,7 +16,11 @@ class CustomPriceController extends Controller
      */
     public function index()
     {
-        //
+        $customPrices = CustomPrice::include()
+                            ->filter()
+                            ->sort()
+                            ->getOrPaginate();
+        return CustomPriceResource::collection($customPrices);
     }
 
     /**
@@ -26,7 +31,15 @@ class CustomPriceController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'adult_price' => 'required|numeric',
+            'child_price' => 'required|numeric',
+            'custom_date_id' => 'required|integer|exists:custom_dates,id|unique:custom_prices',
+        ]);
+
+        $customPrice = CustomPrice::create($request->all());
+
+        return CustomPriceResource::make($customPrice);
     }
 
     /**
@@ -35,9 +48,10 @@ class CustomPriceController extends Controller
      * @param  \App\Models\CustomPrice  $customPrice
      * @return \Illuminate\Http\Response
      */
-    public function show(CustomPrice $customPrice)
+    public function show($id)
     {
-        //
+        $customPrice = CustomPrice::include()->findOrFail($id);
+        return CustomPriceResource::make($customPrice);
     }
 
     /**
@@ -49,7 +63,15 @@ class CustomPriceController extends Controller
      */
     public function update(Request $request, CustomPrice $customPrice)
     {
-        //
+        $request->validate([
+            'adult_price' => 'required|numeric',
+            'child_price' => 'required|numeric',
+            'custom_date_id' => 'required|integer|exists:custom_dates,id|unique:custom_prices,custom_date_id,'.$customPrice->id,
+        ]);
+
+        $customPrice->update($request->all());
+
+        return CustomPriceResource::make($customPrice);
     }
 
     /**
@@ -60,6 +82,9 @@ class CustomPriceController extends Controller
      */
     public function destroy(CustomPrice $customPrice)
     {
-        //
+        $customPrice->update(['deleted_at' => now()]);
+        return response()->json([
+            'message' => 'Deleted successfully'
+        ]);
     }
 }

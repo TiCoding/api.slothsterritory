@@ -19,13 +19,12 @@ class CreatePaymentsTable extends Migration
             $table->decimal('colones_amount', 8, 2);
             $table->date('payment_date');
             $table->string('path_file')->nullable();
-            // $table->unsignedBigInteger('paymentable_id');
-            // $table->string('paymentable_type');
             $table->morphs('paymentable');
 
 
             $table->foreignId('payment_method_id')->constrained()->onDelete('restrict');
             $table->foreignId('payment_type_id')->constrained()->onDelete('restrict');
+            $table->date('deleted_at')->nullable();
 
             $table->timestamps();
         });

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\PaymentResource;
 use App\Models\Payment;
 use Illuminate\Http\Request;
 
@@ -15,7 +16,11 @@ class PaymentController extends Controller
      */
     public function index()
     {
-        //
+        $payments = Payment::include()
+                            ->filter()
+                            ->sort()
+                            ->getOrPaginate();
+        return PaymentResource::collection($payments);
     }
 
     /**
@@ -26,7 +31,20 @@ class PaymentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'dollar_amount' => 'required|numeric',
+            'colones_amount' => 'required|numeric',
+            'payment_date' => 'required|date',
+            'path_file' => 'required|string',
+            'paymentable_id' => 'required|integer',
+            'paymentable_type' => 'required|string',
+            'payment_method_id' => 'required|integer|exists:payment_methods,id',
+            'payment_type_id' => 'required|integer|exists:payment_types,id',
+        ]);
+
+        $payment = Payment::create($request->all());
+
+        return PaymentResource::make($payment);
     }
 
     /**
@@ -35,9 +53,10 @@ class PaymentController extends Controller
      * @param  \App\Models\Payment  $payment
      * @return \Illuminate\Http\Response
      */
-    public function show(Payment $payment)
+    public function show($id)
     {
-        //
+        $payment = Payment::include()->findOrFail($id);
+        return PaymentResource::make($payment);
     }
 
     /**
@@ -49,7 +68,20 @@ class PaymentController extends Controller
      */
     public function update(Request $request, Payment $payment)
     {
-        //
+        $request->validate([
+            'dollar_amount' => 'required|numeric',
+            'colones_amount' => 'required|numeric',
+            'payment_date' => 'required|date',
+            'path_file' => 'required|string',
+            'paymentable_id' => 'required|integer',
+            'paymentable_type' => 'required|string',
+            'payment_method_id' => 'required|integer|exists:payment_methods,id',
+            'payment_type_id' => 'required|integer|exists:payment_types,id',
+        ]);
+
+        $payment->update($request->all());
+
+        return PaymentResource::make($payment);
     }
 
     /**
@@ -60,6 +92,9 @@ class PaymentController extends Controller
      */
     public function destroy(Payment $payment)
     {
-        //
+        $payment->update(['deleted_at' => now()]);
+        return response()->json([
+            'message' => 'Deleted successfully'
+        ]);
     }
 }

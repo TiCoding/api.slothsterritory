@@ -5,12 +5,36 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+use App\Traits\ApiTrait;
+
 class Customer extends Model
 {
 
-    protected $guarded = [];
+    protected $fillable = [
+        'name',
+        'email',
+        'phone',
+    ];
 
-    use HasFactory;
+    protected $allowInclude = [
+        'reservations',
+    ];
+
+    protected $allowFilter = [
+        'id',
+        'name',
+        'email',
+        'phone',
+    ];
+
+    protected $allowSort = [
+        'id',
+        'name',
+        'email',
+        'phone',
+    ];
+
+    use HasFactory, ApiTrait;
 
     // one to many relationship
 

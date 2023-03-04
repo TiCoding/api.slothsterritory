@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\PaymentMethodResource;
 use App\Models\PaymentMethod;
 use Illuminate\Http\Request;
 
@@ -15,7 +16,11 @@ class PaymentMethodController extends Controller
      */
     public function index()
     {
-        //
+        $paymentMethods = PaymentMethod::include()
+                                       ->filter()
+                                       ->sort()
+                                       ->getOrPaginate();
+        return PaymentMethodResource::collection($paymentMethods);
     }
 
     /**
@@ -26,7 +31,13 @@ class PaymentMethodController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|unique:payment_methods'
+        ]);
+
+        $paymentMethod = PaymentMethod::create($request->all());
+
+        return PaymentMethodResource::make($paymentMethod);
     }
 
     /**
@@ -35,9 +46,10 @@ class PaymentMethodController extends Controller
      * @param  \App\Models\PaymentMethod  $paymentMethod
      * @return \Illuminate\Http\Response
      */
-    public function show(PaymentMethod $paymentMethod)
+    public function show($id)
     {
-        //
+        $paymentMethod = PaymentMethod::include()->findOrFail($id);
+        return PaymentMethodResource::make($paymentMethod);
     }
 
     /**
@@ -49,7 +61,13 @@ class PaymentMethodController extends Controller
      */
     public function update(Request $request, PaymentMethod $paymentMethod)
     {
-        //
+        $request->validate([
+            'name' => 'required|unique:payment_methods,name' . $paymentMethod->name,
+        ]);
+
+        $paymentMethod->update($request->all());
+
+        return PaymentMethodResource::make($paymentMethod);
     }
 
     /**
@@ -60,6 +78,9 @@ class PaymentMethodController extends Controller
      */
     public function destroy(PaymentMethod $paymentMethod)
     {
-        //
+        $paymentMethod->update(['deleted_at' => now()]);
+        return response()->json([
+            'message' => 'Deleted successfully'
+        ]);
     }
 }

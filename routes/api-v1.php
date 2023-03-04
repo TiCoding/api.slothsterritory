@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\AgencyController;
 use App\Http\Controllers\Api\AgencyDataController;
 use App\Http\Controllers\Api\AgencyTourController;
+use App\Http\Controllers\Api\Auth\LoginController;
 use App\Http\Controllers\Api\CommissionController;
 use App\Http\Controllers\Api\CustomDateController;
 use App\Http\Controllers\Api\CustomerController;
@@ -15,7 +16,7 @@ use App\Http\Controllers\Api\PaymentController;
 use App\Http\Controllers\Api\PaymentMethodController;
 use App\Http\Controllers\Api\PaymentStatusController;
 use App\Http\Controllers\Api\PaymentTypeController;
-use App\Http\Controllers\Api\RegisterController;
+use App\Http\Controllers\Api\Auth\RegisterController;
 use App\Http\Controllers\Api\ReservationController;
 use App\Http\Controllers\Api\ReservationStatusController;
 use App\Http\Controllers\Api\RoleController;
@@ -25,19 +26,9 @@ use App\Http\Controllers\Api\TourGroupController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-
-
-// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
+Route::post('login', [LoginController::class, 'store']);
 
 Route::post('register', [RegisterController::class, 'store'])->name('api.v1.register');
-
-// Route::get('agencies', [AgencyController::class, 'index'])->name('api.v1.agencies.index');
-// Route::post('agencies', [AgencyController::class, 'store'])->name('api.v1.agencies.store');
-// Route::get('agencies/{agency}', [AgencyController::class, 'show'])->name('api.v1.agencies.show');
-// Route::put('agencies/{agency}', [AgencyController::class, 'update'])->name('api.v1.agencies.update');
-// Route::delete('agencies/{agency}', [AgencyController::class, 'destroy'])->name('api.v1.agencies.destroy');
 
 Route::apiResource('agencies', AgencyController::class)->names('api.v1.agencies');
 Route::apiResource('agency-data', AgencyDataController::class)->names('api.v1.agency-data');
@@ -60,4 +51,5 @@ Route::apiResource('roles', RoleController::class)->names('api.v1.roles');
 Route::apiResource('schedules', ScheduleController::class)->names('api.v1.schedules');
 Route::apiResource('tours', TourController::class)->names('api.v1.tours');
 Route::apiResource('tour-groups', TourGroupController::class)->names('api.v1.tour-groups');
+
 

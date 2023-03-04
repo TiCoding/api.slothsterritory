@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\ScheduleResource;
 use App\Models\Schedule;
 use Illuminate\Http\Request;
 
@@ -15,7 +16,11 @@ class ScheduleController extends Controller
      */
     public function index()
     {
-        //
+        $schedules = Schedule::include()
+                            ->filter()
+                            ->sort()
+                            ->getOrPaginate();
+        return ScheduleResource::collection($schedules);
     }
 
     /**
@@ -26,7 +31,16 @@ class ScheduleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'schedule' => 'required|unique:schedules',
+            'capacity' => 'required|integer',
+            'deadline_hour' => 'required',
+            'tour_id' => 'required|integer|exists:tour,id',
+        ]);
+
+        $schedule = Schedule::create($request->all());
+
+        return ScheduleResource::make($schedule);
     }
 
     /**
@@ -35,9 +49,10 @@ class ScheduleController extends Controller
      * @param  \App\Models\Schedule  $schedule
      * @return \Illuminate\Http\Response
      */
-    public function show(Schedule $schedule)
+    public function show($id)
     {
-        //
+        $schedule = Schedule::include()->findOrFail($id);
+        return ScheduleResource::make($schedule);
     }
 
     /**
@@ -49,7 +64,16 @@ class ScheduleController extends Controller
      */
     public function update(Request $request, Schedule $schedule)
     {
-        //
+        $request->validate([
+            'schedule' => 'required|unique:schedules,schedule,' . $schedule->id,
+            'capacity' => 'required|integer',
+            'deadline_hour' => 'required',
+            'tour_id' => 'required|integer|exists:tour,id',
+        ]);
+
+        $schedule->update($request->all());
+
+        return ScheduleResource::make($schedule);
     }
 
     /**
@@ -60,6 +84,9 @@ class ScheduleController extends Controller
      */
     public function destroy(Schedule $schedule)
     {
-        //
+        $schedule->update(['deleted_at' => now()]);
+        return response()->json([
+            'message' => 'Deleted successfully'
+        ]);
     }
 }

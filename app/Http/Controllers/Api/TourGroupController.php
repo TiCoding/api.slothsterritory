@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\TourGroupResource;
 use App\Models\TourGroup;
 use Illuminate\Http\Request;
 
@@ -15,7 +16,11 @@ class TourGroupController extends Controller
      */
     public function index()
     {
-        //
+        $tourGroups = TourGroup::include()
+                                ->filter()
+                                ->sort()
+                                ->getOrPaginate();
+        return TourGroupResource::collection($tourGroups);
     }
 
     /**
@@ -26,7 +31,14 @@ class TourGroupController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|string',
+            'guide_id' => 'required|integer|exists:guides,id',
+        ]);
+
+        $tourGroup = TourGroup::create($request->all());
+
+        return TourGroupResource::make($tourGroup);
     }
 
     /**
@@ -35,9 +47,10 @@ class TourGroupController extends Controller
      * @param  \App\Models\TourGroup  $tourGroup
      * @return \Illuminate\Http\Response
      */
-    public function show(TourGroup $tourGroup)
+    public function show($id)
     {
-        //
+        $tourGroup = TourGroup::include()->findOrFail($id);
+        return TourGroupResource::make($tourGroup);
     }
 
     /**
@@ -49,7 +62,14 @@ class TourGroupController extends Controller
      */
     public function update(Request $request, TourGroup $tourGroup)
     {
-        //
+        $request->validate([
+            'name' => 'required|string',
+            'guide_id' => 'required|integer|exists:guides,id' . $tourGroup->id,
+        ]);
+
+        $tourGroup->update($request->all());
+
+        return TourGroupResource::make($tourGroup);
     }
 
     /**
@@ -60,6 +80,9 @@ class TourGroupController extends Controller
      */
     public function destroy(TourGroup $tourGroup)
     {
-        //
+        $tourGroup->update(['deleted_at' => now()]);
+        return response()->json([
+            'message' => 'Deleted successfully'
+        ]);
     }
 }
