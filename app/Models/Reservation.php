@@ -36,6 +36,7 @@ class Reservation extends Model
         'reservation_status_id',
         'tour_id',
         'tour_group_id',
+        'user_id',
     ];
 
     protected $allowInclude = [
@@ -62,6 +63,7 @@ class Reservation extends Model
         'commission',
         'commission.paymentStatus',
         'commission.payments',
+        'user',
 
     ];
 
@@ -92,6 +94,7 @@ class Reservation extends Model
         'reservation_status_id',
         'tour_id',
         'tour_group_id',
+        'user_id',
     ];
 
     protected $allowSort = [
@@ -121,6 +124,7 @@ class Reservation extends Model
         'reservation_status_id',
         'tour_id',
         'tour_group_id',
+        'user_id',
     ];
 
     use HasFactory, ApiTrait;
@@ -165,6 +169,12 @@ class Reservation extends Model
 
     public function agencyData(){
         return $this->hasOne(AgencyData::class);
+    }
+
+    // one to many relationship (inverse)
+
+    public function user(){
+        return $this->belongsTo(User::class);
     }
 
     // one to many relationship (inverse)

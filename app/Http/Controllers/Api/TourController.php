@@ -82,7 +82,7 @@ class TourController extends Controller
      */
     public function destroy(Tour $tour)
     {
-        $tour->update(['deleted_at' => now()]);
+        $tour->delete();
         return response()->json([
             'message' => 'Deleted successfully'
         ]);

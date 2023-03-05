@@ -81,7 +81,7 @@ class CustomDateController extends Controller
      */
     public function destroy(CustomDate $customDate)
     {
-        $customDate->update(['deleted_at' => now()]);
+        $customDate->delete();
         return response()->json([
             'message' => 'Deleted successfully'
         ]);

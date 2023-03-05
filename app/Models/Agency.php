@@ -4,13 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
 
 use App\Traits\ApiTrait;
 
 class Agency extends Model
 {
 
-    use HasFactory, ApiTrait;
+    use HasFactory, ApiTrait, SoftDeletes;
 
     protected $fillable = [
         'name',

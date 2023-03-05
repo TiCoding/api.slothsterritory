@@ -126,7 +126,7 @@ class ReservationController extends Controller
      */
     public function destroy(Reservation $reservation)
     {
-        $reservation->update(['deleted_at' => now()]);
+        $reservation->delete();
         return response()->json([
             'message' => 'Deleted successfully'
         ]);

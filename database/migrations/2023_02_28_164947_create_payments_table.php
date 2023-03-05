@@ -24,7 +24,7 @@ class CreatePaymentsTable extends Migration
 
             $table->foreignId('payment_method_id')->constrained()->onDelete('restrict');
             $table->foreignId('payment_type_id')->constrained()->onDelete('restrict');
-            $table->date('deleted_at')->nullable();
+            $table->softDeletes();
 
             $table->timestamps();
         });

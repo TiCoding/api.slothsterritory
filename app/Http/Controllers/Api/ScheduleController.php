@@ -84,7 +84,7 @@ class ScheduleController extends Controller
      */
     public function destroy(Schedule $schedule)
     {
-        $schedule->update(['deleted_at' => now()]);
+        $schedule->delete();
         return response()->json([
             'message' => 'Deleted successfully'
         ]);

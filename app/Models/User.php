@@ -28,6 +28,7 @@ class User extends Authenticatable
 
     protected $allowInclude = [
         'role',
+        'reservations',
     ];
 
     protected $allowFilter = [
@@ -68,6 +69,13 @@ class User extends Authenticatable
     public function role()
     {
         return $this->belongsTo(Role::class);
+    }
+
+    // one to many relationship
+
+    public function reservations()
+    {
+        return $this->hasMany(Reservation::class);
     }
 
 }

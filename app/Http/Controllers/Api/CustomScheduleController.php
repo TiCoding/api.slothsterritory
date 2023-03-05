@@ -84,7 +84,7 @@ class CustomScheduleController extends Controller
      */
     public function destroy(CustomSchedule $customSchedule)
     {
-        $customSchedule->update(['deleted_at' => now()]);
+        $customSchedule->delete();
         return response()->json([
             'message' => 'Deleted successfully'
         ]);

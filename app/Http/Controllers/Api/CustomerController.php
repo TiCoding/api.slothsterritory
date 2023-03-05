@@ -82,7 +82,7 @@ class CustomerController extends Controller
      */
     public function destroy(Customer $customer)
     {
-        $customer->update(['deleted_at' => now()]);
+        $customer->delete();
         return response()->json([
             'message' => 'Deleted successfully'
         ]);
