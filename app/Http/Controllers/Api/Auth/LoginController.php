@@ -7,9 +7,16 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Resources\UserResource;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
+    public function currentUser() {
+        // esto se hace para poder incluir el rol del usuario ya que Auth::user no lo devuelve
+        $userEmail = Auth::user()->email;
+        return User::include()->where('email', $userEmail)->firstOrFail();
+    }
+
     public function store(Request $request){
         $request->validate([
             'email' => 'required|string|email',

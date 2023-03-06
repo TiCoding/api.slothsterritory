@@ -26,30 +26,34 @@ use App\Http\Controllers\Api\TourGroupController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-Route::post('login', [LoginController::class, 'store']);
 
 Route::post('register', [RegisterController::class, 'store'])->name('api.v1.register');
 
-Route::apiResource('agencies', AgencyController::class)->names('api.v1.agencies');
-Route::apiResource('agency-data', AgencyDataController::class)->names('api.v1.agency-data');
-Route::apiResource('agency-tours', AgencyTourController::class)->names('api.v1.agency-tours');
-Route::apiResource('commissions', CommissionController::class)->names('api.v1.commissions');
-Route::apiResource('custom-dates', CustomDateController::class)->names('api.v1.custom-dates');
-Route::apiResource('customers', CustomerController::class)->names('api.v1.customers');
-Route::apiResource('custom-prices', CustomPriceController::class)->names('api.v1.custom-prices');
-Route::apiResource('custom-schedules', CustomScheduleController::class)->names('api.v1.custom-schedules');
-Route::apiResource('fees', FeeController::class)->names('api.v1.fees');
-Route::apiResource('guides', GuideController::class)->names('api.v1.guides');
-Route::apiResource('guide-statuses', GuideStatusController::class)->names('api.v1.guide-statuses');
-Route::apiResource('payments', PaymentController::class)->names('api.v1.payments');
-Route::apiResource('payment-methods', PaymentMethodController::class)->names('api.v1.payment-methods');
-Route::apiResource('payment-statuses', PaymentStatusController::class)->names('api.v1.payment-statuses');
-Route::apiResource('payment-types', PaymentTypeController::class)->names('api.v1.payment-types');
-Route::apiResource('reservations', ReservationController::class)->names('api.v1.reservations');
-Route::apiResource('reservation-statuses', ReservationStatusController::class)->names('api.v1.reservation-statuses');
-Route::apiResource('roles', RoleController::class)->names('api.v1.roles');
-Route::apiResource('schedules', ScheduleController::class)->names('api.v1.schedules');
-Route::apiResource('tours', TourController::class)->names('api.v1.tours');
-Route::apiResource('tour-groups', TourGroupController::class)->names('api.v1.tour-groups');
+Route::middleware(['auth:api'])->group(function () {
+    Route::get('current-user', [LoginController::class, 'currentUser']);
+    Route::apiResource('agencies', AgencyController::class)->names('api.v1.agencies');
+    Route::apiResource('agency-data', AgencyDataController::class)->names('api.v1.agency-data');
+    Route::apiResource('agency-tours', AgencyTourController::class)->names('api.v1.agency-tours');
+    Route::apiResource('commissions', CommissionController::class)->names('api.v1.commissions');
+    Route::apiResource('custom-dates', CustomDateController::class)->names('api.v1.custom-dates');
+    Route::apiResource('customers', CustomerController::class)->names('api.v1.customers');
+    Route::apiResource('custom-prices', CustomPriceController::class)->names('api.v1.custom-prices');
+    Route::apiResource('custom-schedules', CustomScheduleController::class)->names('api.v1.custom-schedules');
+    Route::apiResource('fees', FeeController::class)->names('api.v1.fees');
+    Route::apiResource('guides', GuideController::class)->names('api.v1.guides');
+    Route::apiResource('guide-statuses', GuideStatusController::class)->names('api.v1.guide-statuses');
+    Route::apiResource('payments', PaymentController::class)->names('api.v1.payments');
+    Route::apiResource('payment-methods', PaymentMethodController::class)->names('api.v1.payment-methods');
+    Route::apiResource('payment-statuses', PaymentStatusController::class)->names('api.v1.payment-statuses');
+    Route::apiResource('payment-types', PaymentTypeController::class)->names('api.v1.payment-types');
+    Route::apiResource('reservations', ReservationController::class)->names('api.v1.reservations');
+    Route::apiResource('reservation-statuses', ReservationStatusController::class)->names('api.v1.reservation-statuses');
+    Route::apiResource('roles', RoleController::class)->names('api.v1.roles');
+    Route::apiResource('schedules', ScheduleController::class)->names('api.v1.schedules');
+    Route::apiResource('tours', TourController::class)->names('api.v1.tours');
+    Route::apiResource('tour-groups', TourGroupController::class)->names('api.v1.tour-groups');
+
+});
+
 
 
