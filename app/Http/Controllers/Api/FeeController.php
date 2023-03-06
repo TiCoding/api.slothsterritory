@@ -84,7 +84,7 @@ class FeeController extends Controller
      */
     public function destroy(Fee $fee)
     {
-        $fee->update(['deleted_at' => now()]);
+        $fee->delete();
         return response()->json([
             'message' => 'Deleted successfully'
         ]);

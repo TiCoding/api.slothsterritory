@@ -80,7 +80,7 @@ class AgencyDataController extends Controller
      */
     public function destroy(AgencyData $agencyData)
     {
-        $agencyData->update(['deleted_at' => now()]);
+        $agencyData->delete();
         return response()->json([
             'message' => 'Deleted successfully'
         ]);

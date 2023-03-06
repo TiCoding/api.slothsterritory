@@ -84,7 +84,7 @@ class AgencyTourController extends Controller
      */
     public function destroy(AgencyTour $agencyTour)
     {
-        $agencyTour->update(['deleted_at' => now()]);
+        $agencyTour->delete();
         return response()->json([
             'message' => 'Deleted successfully'
         ]);

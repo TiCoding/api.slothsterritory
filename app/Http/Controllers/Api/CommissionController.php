@@ -80,7 +80,7 @@ class CommissionController extends Controller
      */
     public function destroy(Commission $commission)
     {
-        $commission->update(['deleted_at' => now()]);
+        $commission->delete();
         return response()->json([
             'message' => 'Deleted successfully'
         ]);

@@ -80,7 +80,7 @@ class GuideController extends Controller
      */
     public function destroy(Guide $guide)
     {
-        $guide->update(['deleted_at' => now()]);
+        $guide->delete();
         return response()->json([
             'message' => 'Deleted successfully'
         ]);

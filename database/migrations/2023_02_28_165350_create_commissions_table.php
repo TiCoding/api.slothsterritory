@@ -20,7 +20,7 @@ class CreateCommissionsTable extends Migration
 
             $table->foreignId('payment_status_id')->constrained()->onDelete('restrict');
             $table->foreignId('reservation_id')->unique()->constrained()->onDelete('restrict');
-            $table->date('deleted_at')->nullable();
+            $table->softDeletes();
 
             $table->timestamps();
         });

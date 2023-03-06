@@ -41,6 +41,7 @@ class ReservationResource extends JsonResource
             'reservation_status_id' => $this->reservation_status_id,
             'tour_id' => $this->tour_id,
             'tour_group_id' => $this->tour_group_id,
+            'user_id' => $this->user_id,
             'agency' => AgencyResource::make($this->whenLoaded('agency')),
             'customer' => CustomerResource::make($this->whenLoaded('customer')),
             'paymentStatus' => PaymentStatusResource::make($this->whenLoaded('paymentStatus')),
@@ -64,6 +65,7 @@ class ReservationResource extends JsonResource
             'commission' => CommissionResource::make($this->whenLoaded('commission')),
             'commission.paymentStatus' => PaymentStatusResource::make($this->whenLoaded('commission.paymentStatus')),
             'commission.payments' => PaymentResource::collection($this->whenLoaded('commission.payments')),
+            'user' => UserResource::make($this->whenLoaded('user')),
         ];
     }
 }

@@ -78,7 +78,7 @@ class PaymentMethodController extends Controller
      */
     public function destroy(PaymentMethod $paymentMethod)
     {
-        $paymentMethod->update(['deleted_at' => now()]);
+        $paymentMethod->delete();
         return response()->json([
             'message' => 'Deleted successfully'
         ]);

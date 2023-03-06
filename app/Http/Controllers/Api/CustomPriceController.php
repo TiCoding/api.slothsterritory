@@ -82,7 +82,7 @@ class CustomPriceController extends Controller
      */
     public function destroy(CustomPrice $customPrice)
     {
-        $customPrice->update(['deleted_at' => now()]);
+        $customPrice->delete();
         return response()->json([
             'message' => 'Deleted successfully'
         ]);

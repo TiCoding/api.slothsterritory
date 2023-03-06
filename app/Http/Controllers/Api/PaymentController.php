@@ -92,7 +92,7 @@ class PaymentController extends Controller
      */
     public function destroy(Payment $payment)
     {
-        $payment->update(['deleted_at' => now()]);
+        $payment->delete();
         return response()->json([
             'message' => 'Deleted successfully'
         ]);

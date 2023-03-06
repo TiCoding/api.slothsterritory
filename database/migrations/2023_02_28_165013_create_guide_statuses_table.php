@@ -16,7 +16,7 @@ class CreateGuideStatusesTable extends Migration
         Schema::create('guide_statuses', function (Blueprint $table) {
             $table->id();
             $table->string('name')->unique();
-            $table->date('deleted_at')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

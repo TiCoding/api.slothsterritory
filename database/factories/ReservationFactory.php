@@ -9,6 +9,7 @@ use App\Models\ReservationStatus;
 use App\Models\Schedule;
 use App\Models\Tour;
 use App\Models\TourGroup;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class ReservationFactory extends Factory
@@ -53,6 +54,7 @@ class ReservationFactory extends Factory
         $reservationStatus = ReservationStatus::all()->random();
         $tour = Tour::all()->random();
         $tourGroup = TourGroup::all()->unique()->random();
+        $user = User::all()->random();
 
         return [
             'amount_adults' => $amountAdults,
@@ -80,6 +82,7 @@ class ReservationFactory extends Factory
             'reservation_status_id' => $reservationStatus->id,
             'tour_id' => $tour->id,
             'tour_group_id' => $tourGroup->id,
+            'user_id' => $user->id,
         ];
     }
 }

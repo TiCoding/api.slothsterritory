@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\CustomDateResource;
 use App\Models\CustomDate;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class CustomDateController extends Controller
@@ -19,6 +20,7 @@ class CustomDateController extends Controller
         $customDates = CustomDate::include()
                             ->filter()
                             ->sort()
+                            ->getCustomDate()
                             ->getOrPaginate();
         return CustomDateResource::collection($customDates);
     }
@@ -36,6 +38,29 @@ class CustomDateController extends Controller
             'end_date' => 'required|date|unique:custom_dates',
             'agency_tour_id' => 'required|integer|exists:agency_tour,id',
         ]);
+
+        // check if start date exists bewteen in the range of the custom date
+
+        $existCustomDate = CustomDate::where('start_date', '<=', $request->start_date)
+                            ->where('end_date', '>=', $request->start_date)
+                            ->where('agency_tour_id', $request->agency_tour_id)
+                            ->exists();
+
+        if ($existCustomDate) {
+
+            $newCustomDate = CustomDate::create([
+                'start_date' => Carbon::parse($request->end_date)->addDay(),
+                'end_date' => $existCustomDate->end_date,
+                'agency_tour_id' => $existCustomDate->agency_tour_id,
+            ]);
+
+            $existCustomDate->update([
+                'end_date' => Carbon::parse($request->start_date)->subDay(),
+            ]);
+
+
+
+        }
 
         $customDate = CustomDate::create($request->all());
 
@@ -81,7 +106,7 @@ class CustomDateController extends Controller
      */
     public function destroy(CustomDate $customDate)
     {
-        $customDate->update(['deleted_at' => now()]);
+        $customDate->delete();
         return response()->json([
             'message' => 'Deleted successfully'
         ]);
