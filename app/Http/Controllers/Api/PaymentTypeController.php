@@ -78,7 +78,7 @@ class PaymentTypeController extends Controller
      */
     public function destroy(PaymentType $paymentType)
     {
-        $paymentType->delete();
+        $paymentType->softDeleted( $paymentType->id);
         return response()->json([
             'message' => 'Deleted successfully'
         ]);

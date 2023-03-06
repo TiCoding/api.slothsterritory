@@ -80,7 +80,7 @@ class GuideController extends Controller
      */
     public function destroy(Guide $guide)
     {
-        $guide->delete();
+        $guide->softDeleted( $guide->id);
         return response()->json([
             'message' => 'Deleted successfully'
         ]);

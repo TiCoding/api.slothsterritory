@@ -6,9 +6,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 use App\Traits\ApiTrait;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Guide extends Model
 {
+    use HasFactory, ApiTrait, SoftDeletes;
 
     protected $fillable = [
         'name',
@@ -33,7 +35,6 @@ class Guide extends Model
         'guide_status_id',
     ];
 
-    use HasFactory, ApiTrait;
 
     // one to many relationship (inverse)
 

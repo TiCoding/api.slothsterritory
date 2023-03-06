@@ -7,9 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 
 use App\Traits\ApiTrait;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class CustomDate extends Model
 {
+    use HasFactory, ApiTrait, SoftDeletes;
 
     protected $fillable = [
         'start_date',
@@ -40,7 +42,6 @@ class CustomDate extends Model
         'agency_tour_id',
     ];
 
-    use HasFactory, ApiTrait;
 
     // one to one relationship
 

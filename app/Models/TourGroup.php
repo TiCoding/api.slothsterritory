@@ -6,9 +6,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 use App\Traits\ApiTrait;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class TourGroup extends Model
 {
+    use HasFactory, ApiTrait, SoftDeletes;
 
     protected $fillable = [
         'name',
@@ -32,7 +34,6 @@ class TourGroup extends Model
         'guide_id',
     ];
 
-    use HasFactory, ApiTrait;
 
     // one to many relationship (inverse)
 

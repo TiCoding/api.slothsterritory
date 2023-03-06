@@ -82,7 +82,7 @@ class TourController extends Controller
      */
     public function destroy(Tour $tour)
     {
-        $tour->delete();
+        $tour->softDeleted( $tour->id);
         return response()->json([
             'message' => 'Deleted successfully'
         ]);

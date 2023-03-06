@@ -6,9 +6,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 use App\Traits\ApiTrait;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class AgencyData extends Model
 {
+    use HasFactory, ApiTrait, SoftDeletes;
 
     protected $fillable = [
         'agent_name',
@@ -31,7 +33,6 @@ class AgencyData extends Model
         'reservation_id',
     ];
 
-    use HasFactory, ApiTrait;
 
     // one to one relationship (inverse)
 

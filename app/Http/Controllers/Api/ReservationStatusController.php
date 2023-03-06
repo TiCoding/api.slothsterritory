@@ -78,7 +78,7 @@ class ReservationStatusController extends Controller
      */
     public function destroy(ReservationStatus $reservationStatus)
     {
-        $reservationStatus->delete();
+        $reservationStatus->softDeleted( $reservationStatus->id);
         return response()->json([
             'message' => 'Deleted successfully'
         ]);

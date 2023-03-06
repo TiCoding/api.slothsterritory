@@ -6,9 +6,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 use App\Traits\ApiTrait;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Fee extends Model
 {
+    use HasFactory, ApiTrait, SoftDeletes;
 
     protected $fillable = [
         'amount_dollars',
@@ -41,7 +43,6 @@ class Fee extends Model
         'payment_status_id',
     ];
 
-    use HasFactory, ApiTrait;
 
     // one to many relationship (inverse)
 

@@ -78,7 +78,7 @@ class GuideStatusController extends Controller
      */
     public function destroy(GuideStatus $guideStatus)
     {
-        $guideStatus->delete();
+        $guideStatus->softDeleted( $guideStatus->id);
         return response()->json([
             'message' => 'Deleted successfully'
         ]);

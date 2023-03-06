@@ -106,7 +106,7 @@ class CustomDateController extends Controller
      */
     public function destroy(CustomDate $customDate)
     {
-        $customDate->delete();
+        $customDate->softDeleted( $customDate->id);
         return response()->json([
             'message' => 'Deleted successfully'
         ]);

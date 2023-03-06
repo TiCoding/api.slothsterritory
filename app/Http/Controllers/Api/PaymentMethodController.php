@@ -78,7 +78,7 @@ class PaymentMethodController extends Controller
      */
     public function destroy(PaymentMethod $paymentMethod)
     {
-        $paymentMethod->delete();
+        $paymentMethod->softDeleted( $paymentMethod->id);
         return response()->json([
             'message' => 'Deleted successfully'
         ]);

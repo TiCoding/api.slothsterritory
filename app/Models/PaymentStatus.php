@@ -6,9 +6,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 use App\Traits\ApiTrait;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class PaymentStatus extends Model
 {
+    use HasFactory, ApiTrait, SoftDeletes;
 
     protected $fillable = [
         'name',
@@ -30,7 +32,6 @@ class PaymentStatus extends Model
         'name',
     ];
 
-    use HasFactory, ApiTrait;
 
     // one to many relationship
 

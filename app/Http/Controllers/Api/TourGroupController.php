@@ -80,7 +80,7 @@ class TourGroupController extends Controller
      */
     public function destroy(TourGroup $tourGroup)
     {
-        $tourGroup->delete();
+        $tourGroup->softDeleted( $tourGroup->id);
         return response()->json([
             'message' => 'Deleted successfully'
         ]);

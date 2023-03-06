@@ -84,7 +84,7 @@ class AgencyTourController extends Controller
      */
     public function destroy(AgencyTour $agencyTour)
     {
-        $agencyTour->delete();
+        $agencyTour->softDelete($agencyTour->id);
         return response()->json([
             'message' => 'Deleted successfully'
         ]);
