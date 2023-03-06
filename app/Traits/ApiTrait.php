@@ -83,10 +83,4 @@ trait ApiTrait
         return $query->get();
     }
 
-    // TODO: implement this
-    public function scopeDateBetween(Builder $query){
-        if (request()->has('dateBetween')) {
-
-        }
-    }
 }

@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 use App\Traits\ApiTrait;
+use Illuminate\Database\Eloquent\Builder;
 
 class CustomDate extends Model
 {
@@ -60,5 +61,20 @@ class CustomDate extends Model
     public function agencyTour()
     {
         return $this->belongsTo(AgencyTour::class);
+    }
+
+    // scopes
+    // get custome dtae if date exist between start and end date
+    public function scopeGetCustomDate(Builder $query)
+    {
+        // return;
+        if (!request()->has('date')) {
+            return;
+        }
+
+        $date = request('date');
+
+        $query->where('start_date', '<=', $date)
+            ->where('end_date', '>=', $date);
     }
 }
