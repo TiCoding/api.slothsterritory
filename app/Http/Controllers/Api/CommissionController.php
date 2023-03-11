@@ -70,6 +70,16 @@ class CommissionController extends Controller
             'payment_status_id' => 'required|integer|exists:payment_status,id',
             'reservation_id' => 'required|integer|unique:commissions,reservation_id|exists:reservations,id'. $commission->id,
         ]);
+
+        if(!$commission->payment){
+            return response()->json([
+                'message' => 'No se puede editar, porque no tiene un pago asociado'
+            ], 400);
+        }
+
+        $commission->update($request->all());
+
+        return CommissionResource::make($commission);
     }
 
     /**

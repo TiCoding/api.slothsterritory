@@ -71,6 +71,12 @@ class FeeController extends Controller
             'reservation_id' => 'required|integer|unique:fees,reservation_id|exists:reservations,id'.$fee->id,
         ]);
 
+        if(!$fee->payment){
+            return response()->json([
+                'message' => 'No se puede editar, porque no tiene un pago asociado'
+            ], 400);
+        }
+
         $fee->update($request->all());
 
         return FeeResource::make($fee);
