@@ -71,7 +71,7 @@ class FeeController extends Controller
             'reservation_id' => 'required|integer|unique:fees,reservation_id|exists:reservations,id'.$fee->id,
         ]);
 
-        if(!$fee->payment){
+        if(!$fee->payment){ // TODO: pendiente validar que el nuevo estado es pagado
             return response()->json([
                 'message' => 'No se puede editar, porque no tiene un pago asociado'
             ], 400);

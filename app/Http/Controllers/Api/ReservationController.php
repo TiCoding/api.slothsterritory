@@ -113,6 +113,13 @@ class ReservationController extends Controller
             'tour_group_id' => 'required|integer|exists:tour_groups,id',
         ]);
 
+        // check if update payment status and if this reservation has a payment
+        if($request->payment_status_id != $reservation->payment_status_id && $reservation->payment == null){ // TODO: pendiente validar que el nuevo estado es pagado
+            return response()->json([
+                'message' => 'No se puede cambiar el estado de pago de esta reservación porque no tiene un pago asociado'
+            ], 400);
+        }
+
         $reservation->update($request->all());
 
         return ReservationResource::make($reservation);

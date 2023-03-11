@@ -71,7 +71,7 @@ class CommissionController extends Controller
             'reservation_id' => 'required|integer|unique:commissions,reservation_id|exists:reservations,id'. $commission->id,
         ]);
 
-        if(!$commission->payment){
+        if(!$commission->payment){ // TODO: pendiente validar que el nuevo estado es pagado
             return response()->json([
                 'message' => 'No se puede editar, porque no tiene un pago asociado'
             ], 400);
