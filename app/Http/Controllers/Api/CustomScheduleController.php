@@ -68,7 +68,7 @@ class CustomScheduleController extends Controller
             'schedule' => 'required',
             'capacity' => 'required|integer',
             'deadline_hour' => 'required',
-            'custom_date_id' => 'required|integer|exists:custom_dates,id|unique:custom_schedules,custom_date_id,'.$customSchedule->id,
+            'custom_date_id' => 'required|integer|exists:custom_dates,id',
         ]);
 
         $customSchedule->update($request->all());

@@ -17,7 +17,6 @@ class Agency extends Model
     protected $fillable = [
         'name',
         'email',
-        'commission_dollars',
         'commission_percent',
         'color',
     ];
@@ -37,6 +36,7 @@ class Agency extends Model
         'id',
         'name',
         'email',
+        'commission_percent',
         'color',
     ];
 
@@ -44,7 +44,6 @@ class Agency extends Model
         'id',
         'name',
         'email',
-        'commission_dollars',
         'commission_percent',
         'color',
     ];

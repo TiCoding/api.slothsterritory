@@ -34,26 +34,57 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
-        Role::factory(2)->create();
-        $this->call(UserSeeder::class);
-        ReservationStatus::factory(3)->create();
-        Customer::factory(10)->create();
-        PaymentStatus::factory(3)->create();
-        PaymentType::factory(3)->create();
-        PaymentMethod::factory(4)->create();
-        Payment::factory(10)->create();
-        GuideStatus::factory(2)->create();
-        Guide::factory(5)->create();
-        Tour::factory(3)->create();
-        Schedule::factory(5)->create();
-        TourGroup::factory(30)->create();
-        Agency::factory(10)->create();
-        Reservation::factory(50)->create();
-        Fee::factory(50)->create();
-        AgencyData::factory(3)->create(); // Check this
-        Commission::factory(3)->create(); // Check this
+        // Role::factory(2)->create();
+        Role::create(['name' => 'Administrador']);
+        Role::create(['name' => 'Empleado']);
+        Role::create(['name' => 'Desarrollador']);
 
+        $this->call(UserSeeder::class);
+
+        // ReservationStatus::factory(3)->create();
+        ReservationStatus::create(['name' => 'Pendiente']);
+        ReservationStatus::create(['name' => 'Llegó']);
+        ReservationStatus::create(['name' => 'Cancelada']);
+
+        Customer::factory(10)->create();
+
+        // PaymentStatus::factory(3)->create();
+        PaymentStatus::create(['name' => 'Pendiente']);
+        PaymentStatus::create(['name' => 'Pagado']);
+
+        // PaymentType::factory(3)->create();
+        PaymentType::create(['name' => 'Reserva']);
+        PaymentType::create(['name' => 'Comision']);
+        PaymentType::create(['name' => 'Honorario']);
+
+        // PaymentMethod::factory(4)->create();
+        PaymentMethod::create(['name' => 'Efectivo']);
+        PaymentMethod::create(['name' => 'Tarjeta']);
+        PaymentMethod::create(['name' => 'Transferencia']);
+
+        Payment::factory(10)->create();
+
+        // GuideStatus::factory(2)->create();
+        GuideStatus::create(['name' => 'Disponible']);
+        GuideStatus::create(['name' => 'No disponible']);
+
+        Guide::factory(5)->create();
+
+        Tour::factory(3)->create();
+
+        Schedule::factory(5)->create();
+
+        TourGroup::factory(30)->create();
+
+        Agency::factory(10)->create();
+
+        Reservation::factory(50)->create();
+
+        Fee::factory(30)->create();
+
+        AgencyData::factory(3)->create(); // Check this
+
+        Commission::factory(3)->create(); // Check this
 
         AgencyTour::factory(4)->create();
 
@@ -64,8 +95,16 @@ class DatabaseSeeder extends Seeder
         CustomDate::create([ 'start_date' => '2021-01-01', 'end_date' => '2023-01-01', 'agency_tour_id' => 4, ]);
 
 
-        CustomSchedule::factory(3)->create();
-        CustomPrice::factory(1)->create();
+        // CustomSchedule::factory(3)->create();
+        CustomSchedule::create([ 'schedule' => '8:00', 'capacity' => 20, 'deadline_hour' => '5:00', 'custom_date_id' => 4, ]);
+        CustomSchedule::create([ 'schedule' => '9:00', 'capacity' => 20, 'deadline_hour' => '6:00', 'custom_date_id' => 4, ]);
+        CustomSchedule::create([ 'schedule' => '10:00', 'capacity' => 20, 'deadline_hour' => '7:00', 'custom_date_id' => 4, ]);
+        CustomSchedule::create([ 'schedule' => '11:00', 'capacity' => 20, 'deadline_hour' => '8:00', 'custom_date_id' => 2, ]);
+
+
+        // CustomPrice::factory(1)->create();
+        CustomPrice::create([ 'adult_price' => 60, 'child_price' => 50, 'custom_date_id' => 1, ]);
+        CustomPrice::create([ 'adult_price' => 65, 'child_price' => 45, 'custom_date_id' => 4, ]);
 
 
 

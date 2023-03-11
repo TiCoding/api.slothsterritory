@@ -17,7 +17,6 @@ class AgencyResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'commission_dollars' => $this->commission_dollars,
             'commission_percent' => $this->commission_percent,
             'color' => $this->color,
             'email' => $this->email,

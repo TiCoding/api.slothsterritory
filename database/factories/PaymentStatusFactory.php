@@ -14,7 +14,7 @@ class PaymentStatusFactory extends Factory
     public function definition()
     {
 
-        $name = $this->faker->unique()->randomElement(['Pending', 'Approved', 'Rejected']);
+        $name = $this->faker->unique()->randomElement(['Pendiente', 'Pagado']);
 
         return [
             'name' => $name,

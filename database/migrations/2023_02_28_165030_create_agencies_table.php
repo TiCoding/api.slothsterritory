@@ -16,7 +16,6 @@ class CreateAgenciesTable extends Migration
         Schema::create('agencies', function (Blueprint $table) {
             $table->id();
             $table->string('name')->unique()->index();
-            $table->decimal('commission_dollars', 5, 2)->default(0.00);
             $table->decimal('commission_percent', 5, 2)->default(0.00);
             $table->string('color')->unique();
             $table->string('email')->unique()->index();

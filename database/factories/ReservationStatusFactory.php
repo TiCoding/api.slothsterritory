@@ -14,7 +14,7 @@ class ReservationStatusFactory extends Factory
     public function definition()
     {
 
-        $name = $this->faker->unique()->randomElement(['Pendiente', 'Confirmada', 'Cancelada']);
+        $name = $this->faker->unique()->randomElement(['Pendiente', 'Llegó', 'Cancelada']);
 
         return [
             'name' => $name,

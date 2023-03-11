@@ -43,9 +43,9 @@ class ReservationFactory extends Factory
         $netPriceDollars = $totalPriceDollar - $discountDollars + $taxesDollars;
         $netPriceColones = $totalPriceColones - $discountColones + $taxesColones;
 
-        $invoice = $this->faker->unique()->numberBetween(1, 9999);
+        $invoice = $this->faker->unique()->numberBetween(1, 999999);
         $comments = $this->faker->text(50);
-        $date = TourGroup::all()->random()->date;
+
         $schedule = Schedule::all()->random();
 
         $agency = Agency::all()->random();
@@ -54,6 +54,7 @@ class ReservationFactory extends Factory
         $reservationStatus = ReservationStatus::all()->random();
         $tour = Tour::all()->random();
         $tourGroup = TourGroup::all()->random();
+        $date = $tourGroup->date;
         $user = User::all()->random();
 
         return [

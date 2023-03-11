@@ -14,7 +14,7 @@ class GuideStatusFactory extends Factory
     public function definition()
     {
 
-        $name = $this->faker->unique()->randomElement(['Working', 'Finished']);
+        $name = $this->faker->unique()->randomElement(['Disponible', 'No disponible']);
 
         return [
             'name' => $name,

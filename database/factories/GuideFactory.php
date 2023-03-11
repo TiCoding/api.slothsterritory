@@ -16,7 +16,7 @@ class GuideFactory extends Factory
     {
 
         $name = $this->faker->unique()->name;
-        $guideStatus = GuideStatus::all()->random();
+        $guideStatus = GuideStatus::all()->where('name', 'Disponible')->first();
 
         return [
             'name' => $name,

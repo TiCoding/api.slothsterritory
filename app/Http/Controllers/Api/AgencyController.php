@@ -41,7 +41,6 @@ class AgencyController extends Controller
         $request->validate([
             'name' => 'required|string|max:255|unique:agencies',
             'email' => 'required|string|email|max:255|unique:agencies',
-            'commission_dollars' => 'required|numeric',
             'commission_percent' => 'required|numeric',
             'color' => 'required|string|max:255|unique:agencies',
         ]);
@@ -49,7 +48,6 @@ class AgencyController extends Controller
         $agency = Agency::create([
             'name' => $request->name,
             'email' => $request->email,
-            'commission_dollars' => $request->commission_dollars,
             'commission_percent' => $request->commission_percent,
             'color' => $request->color,
         ]);
@@ -82,7 +80,6 @@ class AgencyController extends Controller
         $request->validate([
             'name' => 'required|string|max:255|unique:agencies,name,'.$agency->id,
             'email' => 'required|string|email|max:255|unique:agencies,email,'.$agency->id,
-            'commission_dollars' => 'required|numeric',
             'commission_percent' => 'required|numeric',
             'color' => 'required|string|max:255|unique:agencies,color,'.$agency->id,
         ]);
