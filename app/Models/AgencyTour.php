@@ -13,8 +13,6 @@ class AgencyTour extends Model
     use HasFactory, ApiTrait, SoftDeletes;
 
     protected $fillable = [
-        'adult_price',
-        'child_price',
         'agency_id',
         'tour_id',
     ];
@@ -29,16 +27,12 @@ class AgencyTour extends Model
 
     protected $allowFilter = [
         'id',
-        'adult_price',
-        'child_price',
         'agency_id',
         'tour_id',
     ];
 
     protected $allowSort = [
         'id',
-        'adult_price',
-        'child_price',
         'agency_id',
         'tour_id',
     ];

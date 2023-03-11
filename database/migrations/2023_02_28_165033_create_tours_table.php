@@ -18,6 +18,8 @@ class CreateToursTable extends Migration
             $table->string('name')->unique();
             $table->text('description');
             $table->string('path_image');
+            $table->decimal('adult_price', 8, 2);
+            $table->decimal('child_price', 8, 2);
             $table->softDeletes();
 
             $table->timestamps();

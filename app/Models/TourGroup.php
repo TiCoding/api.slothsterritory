@@ -15,6 +15,8 @@ class TourGroup extends Model
     protected $fillable = [
         'name',
         'guide_id',
+        'date',
+        'schedule',
     ];
 
     protected $allowInclude = [
@@ -26,12 +28,16 @@ class TourGroup extends Model
         'id',
         'name',
         'guide_id',
+        'date',
+        'schedule',
     ];
 
     protected $allowSort = [
         'id',
         'name',
         'guide_id',
+        'date',
+        'schedule',
     ];
 
 

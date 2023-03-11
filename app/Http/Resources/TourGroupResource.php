@@ -18,6 +18,8 @@ class TourGroupResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'guide_id' => $this->guide_id,
+            'date' => $this->date,
+            'schedule' => $this->schedule,
             'guide' => GuideResource::make($this->whenLoaded('guide')),
             'reservations' => ReservationResource::collection($this->whenLoaded('reservations')),
         ];

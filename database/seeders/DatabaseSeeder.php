@@ -45,23 +45,25 @@ class DatabaseSeeder extends Seeder
         Payment::factory(10)->create();
         GuideStatus::factory(2)->create();
         Guide::factory(5)->create();
-        TourGroup::factory(50)->create();
-        Agency::factory(10)->create();
         Tour::factory(3)->create();
         Schedule::factory(5)->create();
+        TourGroup::factory(30)->create();
+        Agency::factory(10)->create();
         Reservation::factory(50)->create();
         Fee::factory(50)->create();
         AgencyData::factory(3)->create(); // Check this
         Commission::factory(3)->create(); // Check this
 
-        // AgencyTour::create([
-        //     'adult_price' => 100,
-        //     'child_price' => 50,
-        //     'agency_id' => 1,
-        //     'tour_id' => 1,
-        // ]);
-        AgencyTour::factory(3)->create();
-        CustomDate::factory(5)->create();
+
+        AgencyTour::factory(4)->create();
+
+        // CustomDate::factory(5)->create();
+        CustomDate::create([ 'start_date' => '2000-01-01', 'end_date' => '2005-01-01', 'agency_tour_id' => 1, ]);
+        CustomDate::create([ 'start_date' => '2010-01-01', 'end_date' => '2015-01-01', 'agency_tour_id' => 2, ]);
+        CustomDate::create([ 'start_date' => '2016-01-01', 'end_date' => '2020-01-01', 'agency_tour_id' => 3, ]);
+        CustomDate::create([ 'start_date' => '2021-01-01', 'end_date' => '2023-01-01', 'agency_tour_id' => 4, ]);
+
+
         CustomSchedule::factory(3)->create();
         CustomPrice::factory(1)->create();
 

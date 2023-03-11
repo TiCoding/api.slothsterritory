@@ -32,8 +32,6 @@ class AgencyTourController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'adult_price' => 'required|numeric',
-            'child_price' => 'required|numeric',
             'tour_id' => 'required|integer|exists:tour,id',
             'agency_id' => 'required|integer|exists:agency,id',
         ]);
@@ -65,8 +63,6 @@ class AgencyTourController extends Controller
     public function update(Request $request, AgencyTour $agencyTour)
     {
         $request->validate([
-            'adult_price' => 'required|numeric',
-            'child_price' => 'required|numeric',
             'tour_id' => 'required|integer|exists:tour,id',
             'agency_id' => 'required|integer|exists:agency,id',
         ]);

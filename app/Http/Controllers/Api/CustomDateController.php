@@ -69,8 +69,7 @@ class CustomDateController extends Controller
 
         if ($existCustomDate) {
 
-            // return $existCustomDate;
-            // return $existCustomDate->start_date;
+            // TODO: que pasa cuando cae encima de 2 o mas custom dates
 
             // Switch
             switch ($existCustomDate) {

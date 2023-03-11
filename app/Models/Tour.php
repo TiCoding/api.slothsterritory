@@ -16,12 +16,15 @@ class Tour extends Model
         'name',
         'description',
         'path_image',
+        'adult_price',
+        'child_price',
     ];
 
     protected $allowInclude = [
         'schedules',
         'agencies',
         'agencyTours',
+        'reservations',
     ];
 
     protected $allowFilter = [
@@ -29,6 +32,8 @@ class Tour extends Model
         'name',
         'description',
         'path_image',
+        'adult_price',
+        'child_price',
     ];
 
     protected $allowSort = [
@@ -36,6 +41,8 @@ class Tour extends Model
         'name',
         'description',
         'path_image',
+        'adult_price',
+        'child_price',
     ];
 
 

@@ -19,9 +19,12 @@ class TourResource extends JsonResource
             'name' => $this->name,
             'description' => $this->description,
             'path_image' => $this->path_image,
+            'adult_price' => $this->adult_price,
+            'child_price' => $this->child_price,
             'schedules' => ScheduleResource::collection($this->whenLoaded('schedules')),
             'agencies' => AgencyResource::collection($this->whenLoaded('agencies')),
             'agencyTours' => AgencyTourResource::collection($this->whenLoaded('agencyTours')),
+            'reservations' => ReservationResource::collection($this->whenLoaded('reservations')),
         ];
     }
 }

@@ -15,9 +15,6 @@ class CreateAgencyToursTable extends Migration
     {
         Schema::create('agency_tours', function (Blueprint $table) {
             $table->id();
-            $table->decimal('adult_price', 8, 2);
-            $table->decimal('child_price', 8, 2);
-
 
             $table->foreignId('agency_id')->constrained('agencies')->onDelete('restrict');
             $table->foreignId('tour_id')->constrained('tours')->onDelete('restrict');

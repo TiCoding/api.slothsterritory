@@ -17,8 +17,6 @@ class AgencyTourResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'adult_price' => $this->adult_price,
-            'child_price' => $this->child_price,
             'agency_id' => $this->agency_id,
             'tour_id' => $this->tour_id,
             'agency' => AgencyResource::make($this->whenLoaded('agency')),

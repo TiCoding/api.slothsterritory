@@ -35,6 +35,8 @@ class TourController extends Controller
             'name' => 'required|string|unique:tours',
             'description' => 'required|string',
             'path_image' => 'required|string',
+            'adult_price' => 'required|numeric',
+            'child_price' => 'required|numeric',
         ]);
 
         $tour = Tour::create($request->all());
@@ -67,6 +69,8 @@ class TourController extends Controller
             'name' => 'required|string|unique:tours,name,' . $tour->id,
             'description' => 'required|string',
             'path_image' => 'required|string',
+            'adult_price' => 'required|numeric',
+            'child_price' => 'required|numeric',
         ]);
 
         $tour->update($request->all());

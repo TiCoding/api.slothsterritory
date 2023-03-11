@@ -157,8 +157,6 @@ Elimina un registro.
 
 #### campos fillables
 
-- adult_price (required)
-- child_price (required)
 - agency_id (required)
 - tour_id (required)
 
@@ -173,16 +171,12 @@ Elimina un registro.
 #### parametros permitidos para filter
 
 - id
-- adult_price
-- child_price
 - agency_id
 - tour_id
 
 #### parametros permitidos para sort
 
 - id
-- adult_price
-- child_price
 - agency_id
 - tour_id
 
@@ -1049,12 +1043,15 @@ Elimina un horario.
 - name (required)
 - description (required)
 - path_image (required)
+- adult_price (required)
+- child_price (required)
 
 #### parametros permitidos para included
 
 - schedules
 - agencyTours
 - agencies
+- reservations
 
 #### parametros permitidos para filter
 
@@ -1062,6 +1059,8 @@ Elimina un horario.
 - name
 - description
 - path_image
+- adult_price
+- child_price
 
 #### parametros permitidos para sort
 
@@ -1069,6 +1068,8 @@ Elimina un horario.
 - name
 - description
 - path_image
+- adult_price
+- child_price
 
 #### GET /api/v1/tours
 
@@ -1096,6 +1097,8 @@ Elimina un tour.
 
 - name (required)
 - guide_id (required)
+- date (required)
+- schedule (required)
 
 #### parametros permitidos para included
 
@@ -1107,12 +1110,16 @@ Elimina un tour.
 - id
 - name
 - guide_id
+- date
+- schedule
 
 #### parametros permitidos para sort
 
 - id
 - name
 - guide_id
+- date
+- schedule
 
 #### GET /api/v1/tour-groups
 

@@ -16,6 +16,8 @@ class CreateTourGroupsTable extends Migration
         Schema::create('tour_groups', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->date('date');
+            $table->time('schedule');
 
             $table->foreignId('guide_id')->constrained('guides')->onDelete('restrict');
             $table->softDeletes();

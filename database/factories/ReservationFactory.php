@@ -45,7 +45,7 @@ class ReservationFactory extends Factory
 
         $invoice = $this->faker->unique()->numberBetween(1, 9999);
         $comments = $this->faker->text(50);
-        $date = $this->faker->dateTimeBetween('now', '+1 month');
+        $date = TourGroup::all()->random()->date;
         $schedule = Schedule::all()->random();
 
         $agency = Agency::all()->random();
@@ -53,7 +53,7 @@ class ReservationFactory extends Factory
         $paymentStatus = PaymentStatus::all()->random();
         $reservationStatus = ReservationStatus::all()->random();
         $tour = Tour::all()->random();
-        $tourGroup = TourGroup::all()->unique()->random();
+        $tourGroup = TourGroup::all()->random();
         $user = User::all()->random();
 
         return [
