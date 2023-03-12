@@ -40,7 +40,7 @@ trait ApiTrait
         // remove filters that are not allowed
         foreach ($filters as $filter => $value) {
             if ($allowFilter->contains($filter)) {
-                $query->where($filter, 'LIKE', '%' . $value . '%'); // add filter to query
+                $query->orWhere($filter, 'LIKE', '%' . $value . '%'); // add filter to query
             }
         }
     }
