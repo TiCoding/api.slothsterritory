@@ -79,7 +79,7 @@ class PaymentStatusController extends Controller
      */
     public function destroy(PaymentStatus $paymentStatus)
     {
-        $paymentStatus->softDeleted( $paymentStatus->id);
+        $paymentStatus->delete();
         return response()->json([
             'message' => 'Deleted successfully'
         ]);

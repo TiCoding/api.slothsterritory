@@ -78,7 +78,7 @@ class RoleController extends Controller
      */
     public function destroy(Role $role)
     {
-        $role->softDeleted( $role->id);
+        $role->delete();
         return response()->json([
             'message' => 'Deleted successfully'
         ]);

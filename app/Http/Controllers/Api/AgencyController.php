@@ -97,7 +97,7 @@ class AgencyController extends Controller
      */
     public function destroy(Agency $agency)
     {
-        $agency->softDeleted($agency->id);
+        $agency->delete();
 
         return response()->json([
             'message' => 'Deleted successfully'

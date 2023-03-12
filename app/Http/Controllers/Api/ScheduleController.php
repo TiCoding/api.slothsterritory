@@ -84,7 +84,7 @@ class ScheduleController extends Controller
      */
     public function destroy(Schedule $schedule)
     {
-        $schedule->softDeleted( $schedule->id);
+        $schedule->delete();
         return response()->json([
             'message' => 'Deleted successfully'
         ]);

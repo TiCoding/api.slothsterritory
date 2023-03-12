@@ -90,7 +90,7 @@ class FeeController extends Controller
      */
     public function destroy(Fee $fee)
     {
-        $fee->softDeleted( $fee->id);
+        $fee->delete();
         return response()->json([
             'message' => 'Deleted successfully'
         ]);

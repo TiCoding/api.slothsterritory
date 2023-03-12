@@ -82,7 +82,7 @@ class CustomerController extends Controller
      */
     public function destroy(Customer $customer)
     {
-        $customer->softDeleted( $customer->id);
+        $customer->delete();
         return response()->json([
             'message' => 'Deleted successfully'
         ]);

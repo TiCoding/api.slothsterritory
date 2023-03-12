@@ -133,7 +133,7 @@ class ReservationController extends Controller
      */
     public function destroy(Reservation $reservation)
     {
-        $reservation->softDeleted( $reservation->id);
+        $reservation->delete();
         return response()->json([
             'message' => 'Deleted successfully'
         ]);
