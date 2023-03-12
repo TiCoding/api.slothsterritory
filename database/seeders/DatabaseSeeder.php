@@ -72,7 +72,7 @@ class DatabaseSeeder extends Seeder
 
         Tour::factory(3)->create();
 
-        Schedule::factory(5)->create();
+        Schedule::factory(5)->create(); //TODO: change this to manual creation
 
         TourGroup::factory(30)->create();
 
