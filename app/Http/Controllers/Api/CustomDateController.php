@@ -53,7 +53,7 @@ class CustomDateController extends Controller
         // }
 
         // this consult is for check if exist a custom date with the same start date or end date or between the start date and end date
-        $existCustomDate = CustomDate::where( function ($query) use ($request) {
+        $existCustomDates = CustomDate::where( function ($query) use ($request) {
                                             $query
                                             ->where('start_date', '<=', $request->start_date)
                                             ->where('end_date', '>=', $request->start_date);
@@ -65,78 +65,77 @@ class CustomDateController extends Controller
                                         })
                                         ->orWhereBetween('start_date', [$request->start_date, $request->end_date])
                                         ->where('agency_tour_id', $request->agency_tour_id)
-                                        ->first();
+                                        ->get();
 
-        if ($existCustomDate) {
+        // return $existCustomDates;
+        if ($existCustomDates->count() > 0) {
 
-            // TODO: que pasa cuando cae encima de 2 o mas custom dates
+            // for each custom date exist
+            foreach ($existCustomDates as $currentExistCustomDate) {
 
-            // Switch
-            switch ($existCustomDate) {
-                // Case 1
-                case $existCustomDate->start_date < $request->start_date && $existCustomDate->end_date > $request->end_date:
+                // Switch
+                switch ($currentExistCustomDate) {
+                    // Case 1
+                    case $currentExistCustomDate->start_date < $request->start_date && $currentExistCustomDate->end_date > $request->end_date:
 
-                    // chage range of exist custom date
-                    $existCustomDateRange_1 = CustomDate::create([
-                        'start_date' => $existCustomDate->start_date,
-                        'end_date' => Carbon::parse($request->start_date)->subDay(),
-                        'agency_tour_id' => $existCustomDate->agency_tour_id,
-                    ]);
+                        // chage range of exist custom date
+                        $existCustomDateRange_1 = CustomDate::create([
+                            'start_date' => $currentExistCustomDate->start_date,
+                            'end_date' => Carbon::parse($request->start_date)->subDay(),
+                            'agency_tour_id' => $currentExistCustomDate->agency_tour_id,
+                        ]);
 
-                    $existCustomDateRange_2 = CustomDate::create([
-                        'start_date' => Carbon::parse($request->end_date)->addDay(),
-                        'end_date' => $existCustomDate->end_date,
-                        'agency_tour_id' => $existCustomDate->agency_tour_id,
-                    ]);
+                        $existCustomDateRange_2 = CustomDate::create([
+                            'start_date' => Carbon::parse($request->end_date)->addDay(),
+                            'end_date' => $currentExistCustomDate->end_date,
+                            'agency_tour_id' => $currentExistCustomDate->agency_tour_id,
+                        ]);
 
-                    // delete old custom date
-                    $existCustomDate->delete();
+                        break;
 
-                    break;
+                    // Case 2
+                    case $currentExistCustomDate->start_date < $request->start_date && $currentExistCustomDate->end_date < $request->end_date:
 
-                // Case 2
-                case $existCustomDate->start_date < $request->start_date && $existCustomDate->end_date < $request->end_date:
+                        // chage range of exist custom date
+                        $existCustomDateRange_1 = CustomDate::create([
+                            'start_date' => $currentExistCustomDate->start_date,
+                            'end_date' => Carbon::parse($request->start_date)->subDay(),
+                            'agency_tour_id' => $currentExistCustomDate->agency_tour_id,
+                        ]);
 
-                    // chage range of exist custom date
-                    $existCustomDateRange_1 = CustomDate::create([
-                        'start_date' => $existCustomDate->start_date,
-                        'end_date' => Carbon::parse($request->start_date)->subDay(),
-                        'agency_tour_id' => $existCustomDate->agency_tour_id,
-                    ]);
+                        break;
+                    // Case 3
+                    case $currentExistCustomDate->start_date > $request->start_date && $currentExistCustomDate->end_date > $request->end_date:
 
-                    // delete old custom date
-                    $existCustomDate->delete();
+                        // chage range of exist custom date
+                        $existCustomDateRange_1 = CustomDate::create([
+                            'start_date' => Carbon::parse($request->end_date)->addDay(),
+                            'end_date' => $currentExistCustomDate->end_date,
+                            'agency_tour_id' => $currentExistCustomDate->agency_tour_id,
+                        ]);
 
-                    break;
-                // Case 3
-                case $existCustomDate->start_date > $request->start_date && $existCustomDate->end_date > $request->end_date:
+                        break;
 
-                    // chage range of exist custom date
-                    $existCustomDateRange_1 = CustomDate::create([
-                        'start_date' => Carbon::parse($request->end_date)->addDay(),
-                        'end_date' => $existCustomDate->end_date,
-                        'agency_tour_id' => $existCustomDate->agency_tour_id,
-                    ]);
+                    // Case 4
+                    case $currentExistCustomDate->start_date >= $request->start_date && $currentExistCustomDate->end_date <= $request->end_date:
 
-                    // delete old custom date
-                    // $this->destroy($existCustomDate);
-                    $existCustomDate->delete();
+                        // delete old custom date
+                        $currentExistCustomDate->delete();
 
-                    break;
+                        break;
 
-                // Case 4
-                case $existCustomDate->start_date >= $request->start_date && $existCustomDate->end_date <= $request->end_date:
+                    default:
+                        # code...
+                        break;
+                }
 
-                    // delete old custom date
-                    $existCustomDate->delete();
+                // delete old custom date
+                $currentExistCustomDate->delete();
 
-                    break;
+                // deletes first element of collection
+                $existCustomDates->shift();
 
-                default:
-                    # code...
-                    break;
             }
-
         }
 
         $customDate = CustomDate::create($request->all());
