@@ -70,9 +70,24 @@ class DatabaseSeeder extends Seeder
 
         Guide::factory(5)->create();
 
-        Tour::factory(3)->create();
+        // Tour::factory(3)->create(); cerate 3 tours
+        Tour::create(['name' => 'Tour Diurno', 'description' => 'Tour de perezosos', 'path_image' => 'https://picsum.photos/200/300', 'adult_price' => 50, 'child_price' => 30, ]);
+        Tour::create(['name' => 'Tour Nocturno', 'description' => 'Tour nocturno', 'path_image' => 'https://picsum.photos/200/300', 'adult_price' => 50, 'child_price' => 30, ]);
+        Tour::create(['name' => 'Tour Aves', 'description' => 'Tour de aves', 'path_image' => 'https://picsum.photos/200/300', 'adult_price' => 60, 'child_price' => 40, ]);
 
-        Schedule::factory(5)->create(); //TODO: change this to manual creation
+        // Schedule::factory(5)->create(); //TODO: change this to manual creation
+        Schedule::create([ 'schedule' => '8:00', 'capacity' => 20, 'deadline_hour' => '6:00', 'tour_id' => 1, ]);
+        Schedule::create([ 'schedule' => '9:00', 'capacity' => 20, 'deadline_hour' => '7:00', 'tour_id' => 1, ]);
+        Schedule::create([ 'schedule' => '10:00', 'capacity' => 20, 'deadline_hour' => '8:00', 'tour_id' => 1, ]);
+        Schedule::create([ 'schedule' => '11:00', 'capacity' => 20, 'deadline_hour' => '9:00', 'tour_id' => 1, ]);
+        Schedule::create([ 'schedule' => '13:00', 'capacity' => 20, 'deadline_hour' => '12:00', 'tour_id' => 1, ]);
+        Schedule::create([ 'schedule' => '14:00', 'capacity' => 20, 'deadline_hour' => '13:00', 'tour_id' => 1, ]);
+        Schedule::create([ 'schedule' => '15:00', 'capacity' => 20, 'deadline_hour' => '14:00', 'tour_id' => 1, ]);
+        Schedule::create([ 'schedule' => '17:30', 'capacity' => 20, 'deadline_hour' => '16:00', 'tour_id' => 2, ]);
+        Schedule::create([ 'schedule' => '18:00', 'capacity' => 20, 'deadline_hour' => '16:00', 'tour_id' => 2, ]);
+        Schedule::create([ 'schedule' => '05:00', 'capacity' => 20, 'deadline_hour' => '03:00', 'tour_id' => 3, ]);
+
+
 
         TourGroup::factory(30)->create();
 
