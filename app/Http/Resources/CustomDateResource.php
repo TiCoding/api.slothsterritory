@@ -23,7 +23,10 @@ class CustomDateResource extends JsonResource
             'agencyTour' => AgencyTourResource::make($this->whenLoaded('agencyTour')),
             'customPrice' => CustomPriceResource::make($this->whenLoaded('customPrice')),
 
-            'customSchedules' => CustomScheduleResource::collection($this->whenLoaded('customSchedules')),
+            // 'customSchedules' => CustomScheduleResource::collection($this->whenLoaded('customSchedules')),
+            'customSchedules' => CustomScheduleResource::collection($this->whenLoaded('customSchedules', function () {
+                return $this->customSchedules->sortBy('schedule');
+            })),
 
             'agencyTour.tour' => TourResource::make($this->whenLoaded('agencyTour.tour')),
             'agencyTour.agency' => AgencyResource::make($this->whenLoaded('agencyTour.agency')),
