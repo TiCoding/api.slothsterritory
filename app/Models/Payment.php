@@ -17,6 +17,7 @@ class Payment extends Model
         'colones_amount',
         'payment_date',
         'path_file',
+        'comments',
         'payment_type_id',
         'payment_method_id',
         'paymentable_id',
@@ -36,6 +37,7 @@ class Payment extends Model
         'colones_amount',
         'payment_date',
         'path_file',
+        'comments',
         'payment_type_id',
         'payment_method_id',
         'paymentable_id',
@@ -48,6 +50,7 @@ class Payment extends Model
         'colones_amount',
         'payment_date',
         'path_file',
+        'comments',
         'payment_type_id',
         'payment_method_id',
         'paymentable_id',
@@ -75,6 +78,4 @@ class Payment extends Model
     {
         return $this->morphTo();
     }
-
-
 }

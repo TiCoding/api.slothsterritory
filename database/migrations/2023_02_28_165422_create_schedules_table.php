@@ -17,7 +17,7 @@ class CreateSchedulesTable extends Migration
             $table->id();
             $table->time('schedule')->unique();
             $table->integer('capacity');
-            $table->time('deadline_hour');
+            $table->integer('hours_before');
 
             $table->foreignId('tour_id')->constrained('tours')->onDelete('restrict');
 

@@ -18,7 +18,7 @@ class CustomScheduleResource extends JsonResource
             'id' => $this->id,
             'schedule' => $this->schedule,
             'capacity' => $this->capacity,
-            'deadline_hour' => $this->deadline_hour,
+            'hours_before' => $this->hours_before,
             'custom_date_id' => $this->custom_date_id,
             'customDate' => CustomDateResource::make($this->whenLoaded('customDate')),
         ];

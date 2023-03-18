@@ -17,9 +17,9 @@ class PaymentController extends Controller
     public function index()
     {
         $payments = Payment::include()
-                            ->filter()
-                            ->sort()
-                            ->getOrPaginate();
+            ->filter()
+            ->sort()
+            ->getOrPaginate();
         return PaymentResource::collection($payments);
     }
 
@@ -36,6 +36,7 @@ class PaymentController extends Controller
             'colones_amount' => 'required|numeric',
             'payment_date' => 'required|date',
             'path_file' => 'required|string',
+            'comments' => 'string',
             'paymentable_id' => 'required|integer',
             'paymentable_type' => 'required|string',
             'payment_method_id' => 'required|integer|exists:payment_methods,id',
@@ -73,6 +74,7 @@ class PaymentController extends Controller
             'colones_amount' => 'required|numeric',
             'payment_date' => 'required|date',
             'path_file' => 'required|string',
+            'comments' => 'string',
             'paymentable_id' => 'required|integer',
             'paymentable_type' => 'required|string',
             'payment_method_id' => 'required|integer|exists:payment_methods,id',

@@ -17,9 +17,9 @@ class ScheduleController extends Controller
     public function index()
     {
         $schedules = Schedule::include()
-                            ->filter()
-                            ->sort()
-                            ->getOrPaginate();
+            ->filter()
+            ->sort()
+            ->getOrPaginate();
         return ScheduleResource::collection($schedules);
     }
 
@@ -34,7 +34,7 @@ class ScheduleController extends Controller
         $request->validate([
             'schedule' => 'required|unique:schedules',
             'capacity' => 'required|integer',
-            'deadline_hour' => 'required',
+            'hours_before' => 'required|integer',
             'tour_id' => 'required|integer|exists:tour,id',
         ]);
 
@@ -67,7 +67,7 @@ class ScheduleController extends Controller
         $request->validate([
             'schedule' => 'required|unique:schedules,schedule,' . $schedule->id,
             'capacity' => 'required|integer',
-            'deadline_hour' => 'required',
+            'hours_before' => 'required|integer',
             'tour_id' => 'required|integer|exists:tour,id',
         ]);
 

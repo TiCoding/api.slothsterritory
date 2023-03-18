@@ -19,6 +19,7 @@ class CreatePaymentsTable extends Migration
             $table->decimal('colones_amount', 8, 2);
             $table->date('payment_date');
             $table->string('path_file')->nullable();
+            $table->text('comments')->nullable();
             $table->morphs('paymentable');
 
 

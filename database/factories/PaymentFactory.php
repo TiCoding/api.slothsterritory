@@ -30,6 +30,7 @@ class PaymentFactory extends Factory
             'colones_amount' => $colonesAmount,
             'payment_date' => $paymentDate,
             'path_file' => $pathFile,
+            'comments' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod!',
             'payment_method_id' => $paymentMethod->id,
             'payment_type_id' => $paymentType->id,
             'paymentable_type' => $paymentable_type,
