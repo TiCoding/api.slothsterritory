@@ -35,7 +35,7 @@ class ScheduleController extends Controller
             'schedule' => 'required|unique:schedules',
             'capacity' => 'required|integer',
             'deadline_hour' => 'required',
-            'tour_id' => 'required|integer|exists:tour,id',
+            'tour_id' => 'required|integer|exists:tours,id',
         ]);
 
         $schedule = Schedule::create($request->all());
@@ -68,7 +68,7 @@ class ScheduleController extends Controller
             'schedule' => 'required|unique:schedules,schedule,' . $schedule->id,
             'capacity' => 'required|integer',
             'deadline_hour' => 'required',
-            'tour_id' => 'required|integer|exists:tour,id',
+            'tour_id' => 'required|integer|exists:tours,id',
         ]);
 
         $schedule->update($request->all());
@@ -84,9 +84,9 @@ class ScheduleController extends Controller
      */
     public function destroy(Schedule $schedule)
     {
-        $schedule->softDeleted( $schedule->id);
+        $schedule->delete();
         return response()->json([
-            'message' => 'Deleted successfully'
+            'message' => 'Deleted successfully',
         ]);
     }
 }

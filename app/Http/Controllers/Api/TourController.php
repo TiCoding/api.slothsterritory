@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\TourResource;
 use App\Models\Tour;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class TourController extends Controller
 {
@@ -31,15 +32,20 @@ class TourController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
+        $validatedData = $request->validate([
             'name' => 'required|string|unique:tours',
             'description' => 'required|string',
-            'path_image' => 'required|string',
             'adult_price' => 'required|numeric',
             'child_price' => 'required|numeric',
+            'file' => 'required|image|mimes:jpeg,png,jpg,gif|max:15360',
         ]);
 
-        $tour = Tour::create($request->all());
+        $path = $request->file('file')->store('public/tours');
+        $url = Storage::url($path);
+
+        $validatedData['path_image'] = $url;
+
+        $tour = Tour::create($validatedData);
 
         return TourResource::make($tour);
     }

@@ -12,6 +12,8 @@ class Tour extends Model
 {
     use HasFactory, ApiTrait, SoftDeletes;
 
+    protected $table = 'tours';
+
     protected $fillable = [
         'name',
         'description',
