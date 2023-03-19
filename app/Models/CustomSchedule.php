@@ -15,7 +15,7 @@ class CustomSchedule extends Model
     protected $fillable = [
         'schedule',
         'capacity',
-        'deadline_hour',
+        'hours_before',
         'custom_date_id',
     ];
 
@@ -27,7 +27,7 @@ class CustomSchedule extends Model
         'id',
         'schedule',
         'capacity',
-        'deadline_hour',
+        'hours_before',
         'custom_date_id',
     ];
 
@@ -35,7 +35,7 @@ class CustomSchedule extends Model
         'id',
         'schedule',
         'capacity',
-        'deadline_hour',
+        'hours_before',
         'custom_date_id',
     ];
 

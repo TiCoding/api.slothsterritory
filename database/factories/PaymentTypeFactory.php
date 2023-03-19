@@ -14,7 +14,7 @@ class PaymentTypeFactory extends Factory
     public function definition()
     {
 
-        $name = $this->faker->unique()->randomElement(['Reservación', 'Comisión', 'Honorario']);
+        $name = $this->faker->unique()->randomElement(['Reserva', 'Comisión', 'Honorario']);
 
         return [
             'name' => $name,

@@ -17,13 +17,13 @@ class ScheduleFactory extends Factory
 
         $schedule = $this->faker->unique()->randomElement(['6:00', '7:00', '8:00', '9:00', '13:00']);
         $capacity = $this->faker->randomElement([10, 20, 30]);
-        $deadlineHour = '4:00';
+        $hoursBefore = 5;
         $tour = Tour::all()->random();
 
         return [
             'schedule' => $schedule,
             'capacity' => $capacity,
-            'deadline_hour' => $deadlineHour,
+            'hours_before' => $hoursBefore,
             'tour_id' => $tour->id,
         ];
     }

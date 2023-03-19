@@ -70,9 +70,24 @@ class DatabaseSeeder extends Seeder
 
         Guide::factory(5)->create();
 
-        Tour::factory(3)->create();
+        // Tour::factory(3)->create(); cerate 3 tours
+        Tour::create(['name' => 'Tour Diurno', 'description' => 'Tour de perezosos', 'path_image' => 'https://picsum.photos/200/300', 'adult_price' => 50, 'child_price' => 30,]);
+        Tour::create(['name' => 'Tour Nocturno', 'description' => 'Tour nocturno', 'path_image' => 'https://picsum.photos/200/300', 'adult_price' => 50, 'child_price' => 30,]);
+        Tour::create(['name' => 'Tour Aves', 'description' => 'Tour de aves', 'path_image' => 'https://picsum.photos/200/300', 'adult_price' => 60, 'child_price' => 40,]);
 
-        Schedule::factory(5)->create();
+        // Schedule::factory(5)->create(); //TODO: change this to manual creation
+        Schedule::create(['schedule' => '8:00', 'capacity' => 20, 'hours_before' =>  5, 'tour_id' => 1,]);
+        Schedule::create(['schedule' => '9:00', 'capacity' => 20, 'hours_before' =>  5, 'tour_id' => 1,]);
+        Schedule::create(['schedule' => '10:00', 'capacity' => 20, 'hours_before' =>  5, 'tour_id' => 1,]);
+        Schedule::create(['schedule' => '11:00', 'capacity' => 20, 'hours_before' =>  5, 'tour_id' => 1,]);
+        Schedule::create(['schedule' => '13:00', 'capacity' => 20, 'hours_before' =>  5, 'tour_id' => 1,]);
+        Schedule::create(['schedule' => '14:00', 'capacity' => 20, 'hours_before' =>  5, 'tour_id' => 1,]);
+        Schedule::create(['schedule' => '15:00', 'capacity' => 20, 'hours_before' =>  5, 'tour_id' => 1,]);
+        Schedule::create(['schedule' => '17:30', 'capacity' => 20, 'hours_before' =>  5, 'tour_id' => 2,]);
+        Schedule::create(['schedule' => '18:00', 'capacity' => 20, 'hours_before' =>  5, 'tour_id' => 2,]);
+        Schedule::create(['schedule' => '05:00', 'capacity' => 20, 'hours_before' =>  5, 'tour_id' => 3,]);
+
+
 
         TourGroup::factory(30)->create();
 
@@ -89,25 +104,21 @@ class DatabaseSeeder extends Seeder
         AgencyTour::factory(4)->create();
 
         // CustomDate::factory(5)->create();
-        CustomDate::create([ 'start_date' => '2000-01-01', 'end_date' => '2005-01-01', 'agency_tour_id' => 1, ]);
-        CustomDate::create([ 'start_date' => '2010-01-01', 'end_date' => '2015-01-01', 'agency_tour_id' => 2, ]);
-        CustomDate::create([ 'start_date' => '2016-01-01', 'end_date' => '2020-01-01', 'agency_tour_id' => 3, ]);
-        CustomDate::create([ 'start_date' => '2021-01-01', 'end_date' => '2023-01-01', 'agency_tour_id' => 4, ]);
+        CustomDate::create(['start_date' => '2000-01-01', 'end_date' => '2005-01-01', 'agency_tour_id' => 1,]);
+        CustomDate::create(['start_date' => '2010-01-01', 'end_date' => '2015-01-01', 'agency_tour_id' => 2,]);
+        CustomDate::create(['start_date' => '2016-01-01', 'end_date' => '2020-01-01', 'agency_tour_id' => 3,]);
+        CustomDate::create(['start_date' => '2021-01-01', 'end_date' => '2023-01-01', 'agency_tour_id' => 4,]);
 
 
         // CustomSchedule::factory(3)->create();
-        CustomSchedule::create([ 'schedule' => '8:00', 'capacity' => 20, 'deadline_hour' => '5:00', 'custom_date_id' => 4, ]);
-        CustomSchedule::create([ 'schedule' => '9:00', 'capacity' => 20, 'deadline_hour' => '6:00', 'custom_date_id' => 4, ]);
-        CustomSchedule::create([ 'schedule' => '10:00', 'capacity' => 20, 'deadline_hour' => '7:00', 'custom_date_id' => 4, ]);
-        CustomSchedule::create([ 'schedule' => '11:00', 'capacity' => 20, 'deadline_hour' => '8:00', 'custom_date_id' => 2, ]);
+        CustomSchedule::create(['schedule' => '8:00', 'capacity' => 20, 'hours_before' => 5, 'custom_date_id' => 4,]);
+        CustomSchedule::create(['schedule' => '9:00', 'capacity' => 20, 'hours_before' => 5, 'custom_date_id' => 4,]);
+        CustomSchedule::create(['schedule' => '10:00', 'capacity' => 20, 'hours_before' => 5, 'custom_date_id' => 4,]);
+        CustomSchedule::create(['schedule' => '11:00', 'capacity' => 20, 'hours_before' => 5, 'custom_date_id' => 2,]);
 
 
         // CustomPrice::factory(1)->create();
-        CustomPrice::create([ 'adult_price' => 60, 'child_price' => 50, 'custom_date_id' => 1, ]);
-        CustomPrice::create([ 'adult_price' => 65, 'child_price' => 45, 'custom_date_id' => 4, ]);
-
-
-
-
+        CustomPrice::create(['adult_price' => 60, 'child_price' => 50, 'custom_date_id' => 1,]);
+        CustomPrice::create(['adult_price' => 65, 'child_price' => 45, 'custom_date_id' => 4,]);
     }
 }

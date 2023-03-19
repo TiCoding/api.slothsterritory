@@ -18,7 +18,7 @@ class ScheduleResource extends JsonResource
             'id' => $this->id,
             'schedule' => $this->schedule,
             'capacity' => $this->capacity,
-            'deadline_hour' => $this->deadline_hour,
+            'hours_before' => $this->hours_before,
             'tour_id' => $this->tour_id,
             'tour' => TourResource::make($this->whenLoaded('tour')),
         ];

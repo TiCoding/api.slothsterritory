@@ -20,6 +20,7 @@ class PaymentResource extends JsonResource
             'colones_amount' => $this->colones_amount,
             'payment_date' => $this->payment_date,
             'path_file' => $this->path_file,
+            'comments' => $this->comments,
             'payment_type_id' => $this->payment_type_id,
             'payment_method_id' => $this->payment_method_id,
             'paymentable_id' => $this->paymentable_id,

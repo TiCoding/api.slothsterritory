@@ -18,14 +18,14 @@ class CustomScheduleFactory extends Factory
 
         $schedule = $this->faker->unique()->randomElement(['7:30', '8:30', '9:30', '10:30']);
         $capacity = $this->faker->randomElement([10, 20, 30]);
-        $deadlineHour = '4:00';
+        $hoursBefore = 5;
         $tour = Tour::all()->random();
         $customDate = CustomDate::all()->random();
 
         return [
             'schedule' => $schedule,
             'capacity' => $capacity,
-            'deadline_hour' => $deadlineHour,
+            'hours_before' => $hoursBefore,
             'custom_date_id' => $customDate->id,
         ];
     }

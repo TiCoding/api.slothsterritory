@@ -15,7 +15,7 @@ class Schedule extends Model
     protected $fillable = [
         'schedule',
         'capacity',
-        'deadline_hour',
+        'hours_before',
         'tour_id',
     ];
 
@@ -27,7 +27,7 @@ class Schedule extends Model
         'id',
         'schedule',
         'capacity',
-        'deadline_hour',
+        'hours_before',
         'tour_id',
     ];
 
@@ -35,7 +35,7 @@ class Schedule extends Model
         'id',
         'schedule',
         'capacity',
-        'deadline_hour',
+        'hours_before',
         'tour_id',
     ];
 

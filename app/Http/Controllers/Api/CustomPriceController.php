@@ -82,7 +82,7 @@ class CustomPriceController extends Controller
      */
     public function destroy(CustomPrice $customPrice)
     {
-        $customPrice->softDeleted( $customPrice->id);
+        $customPrice->delete();
         return response()->json([
             'message' => 'Deleted successfully'
         ]);

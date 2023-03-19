@@ -48,47 +48,46 @@ Este filtro permite buscar una fecha personalizada segun una fecha.
 
 `GET /api/v1/custom-dates?getCustomDate=2019-01-01`
 
-
 ## Endpoints
 
 ### Agency
 
 #### campos fillables
 
-- name (required)
-- email (required)
-- commission_dollars (required)
-- commission_percent (required)
-- color (required)
+-   name (required)
+-   email (required)
+-   commission_dollars (required)
+-   commission_percent (required)
+-   color (required)
 
 #### parametros permitidos para included
 
-- reservations 
-- tours
-- tours.schedules
-- agencyTours
-- agencyTours.customDates
-- agencyTours.tour
-- agencyTours.customDates.customPrice
-- agencyTours.customDates.customSchedules
+-   reservations
+-   tours
+-   tours.schedules
+-   agencyTours
+-   agencyTours.customDates
+-   agencyTours.tour
+-   agencyTours.customDates.customPrice
+-   agencyTours.customDates.customSchedules
 
 #### parametros permitidos para filter
 
-- id
-- name
-- email
-- commission_dollars
-- commission_percent
-- color
+-   id
+-   name
+-   email
+-   commission_dollars
+-   commission_percent
+-   color
 
 #### parametros permitidos para sort
 
-- id
-- name
-- email
-- commission_dollars
-- commission_percent
-- color
+-   id
+-   name
+-   email
+-   commission_dollars
+-   commission_percent
+-   color
 
 #### GET /api/v1/agencies
 
@@ -114,24 +113,24 @@ Elimina una agencia.
 
 #### campos fillables
 
-- agent_name (required)
-- reservation_id (required)
+-   agent_name (required)
+-   reservation_id (required)
 
 #### parametros permitidos para included
 
-- reservation
+-   reservation
 
 #### parametros permitidos para filter
 
-- id
-- agent_name
-- reservation_id
+-   id
+-   agent_name
+-   reservation_id
 
 #### parametros permitidos para sort
 
-- id
-- agent_name
-- reservation_id
+-   id
+-   agent_name
+-   reservation_id
 
 #### GET /api/v1/agency-data
 
@@ -157,28 +156,28 @@ Elimina un registro.
 
 #### campos fillables
 
-- agency_id (required)
-- tour_id (required)
+-   agency_id (required)
+-   tour_id (required)
 
 #### parametros permitidos para included
 
-- customDates
-- customDates.customPrice
-- customDates.customSchedules
-- tour
-- agency
+-   customDates
+-   customDates.customPrice
+-   customDates.customSchedules
+-   tour
+-   agency
 
 #### parametros permitidos para filter
 
-- id
-- agency_id
-- tour_id
+-   id
+-   agency_id
+-   tour_id
 
 #### parametros permitidos para sort
 
-- id
-- agency_id
-- tour_id
+-   id
+-   agency_id
+-   tour_id
 
 #### GET /api/v1/agency-tours
 
@@ -204,34 +203,34 @@ Elimina un registro.
 
 #### campos fillables
 
-- amount_dollars (required)
-- amount_colones (required)
-- reservation_id (required)
-- payment_status_id (required)
+-   amount_dollars (required)
+-   amount_colones (required)
+-   reservation_id (required)
+-   payment_status_id (required)
 
 #### parametros permitidos para included
 
-- reservation
-- paymentStatus
-- payments
-- payments.paymentMethod
-- payments.paymentType
+-   reservation
+-   paymentStatus
+-   payments
+-   payments.paymentMethod
+-   payments.paymentType
 
 #### parametros permitidos para filter
 
-- id
-- amount_dollars
-- amount_colones
-- reservation_id
-- payment_status_id
+-   id
+-   amount_dollars
+-   amount_colones
+-   reservation_id
+-   payment_status_id
 
 #### parametros permitidos para sort
 
-- id
-- amount_dollars
-- amount_colones
-- reservation_id
-- payment_status_id
+-   id
+-   amount_dollars
+-   amount_colones
+-   reservation_id
+-   payment_status_id
 
 #### GET /api/v1/commissions
 
@@ -257,32 +256,32 @@ Elimina una comisión.
 
 #### campos fillables
 
-- start_date (required)
-- end_date (required)
-- agency_tour_id (required)
+-   start_date (required)
+-   end_date (required)
+-   agency_tour_id (required)
 
 #### parametros permitidos para included
 
-- customPrice
-- customSchedules
-- agencyTour
-- agencyTour.tour
-- agencyTour.agency
-- agencyTour.agency.reservations
+-   customPrice
+-   customSchedules
+-   agencyTour
+-   agencyTour.tour
+-   agencyTour.agency
+-   agencyTour.agency.reservations
 
 #### parametros permitidos para filter
 
-- id
-- start_date
-- end_date
-- agency_tour_id
+-   id
+-   start_date
+-   end_date
+-   agency_tour_id
 
 #### parametros permitidos para sort
 
-- id
-- start_date
-- end_date
-- agency_tour_id
+-   id
+-   start_date
+-   end_date
+-   agency_tour_id
 
 #### GET /api/v1/custom-dates
 
@@ -308,27 +307,27 @@ Elimina una fecha personalizada.
 
 #### campos fillables
 
-- adult_price (required)
-- child_price (required)
-- custom_date_id (required)
+-   adult_price (required)
+-   child_price (required)
+-   custom_date_id (required)
 
 #### parametros permitidos para included
 
-- customDate
+-   customDate
 
 #### parametros permitidos para filter
 
-- id
-- adult_price
-- child_price
-- custom_date_id
+-   id
+-   adult_price
+-   child_price
+-   custom_date_id
 
 #### parametros permitidos para sort
 
-- id
-- adult_price
-- child_price
-- custom_date_id
+-   id
+-   adult_price
+-   child_price
+-   custom_date_id
 
 #### GET /api/v1/custom-prices
 
@@ -354,30 +353,30 @@ Elimina un precio personalizado.
 
 #### campos fillables
 
-- schedule (required)
-- capacity (required)
-- deadline_hour (required)
-- custom_date_id (required)
+-   schedule (required)
+-   capacity (required)
+-   hours_before (required)
+-   custom_date_id (required)
 
 #### parametros permitidos para included
 
-- customDate
+-   customDate
 
 #### parametros permitidos para filter
 
-- id
-- schedule
-- capacity
-- deadline_hour
-- custom_date_id
+-   id
+-   schedule
+-   capacity
+-   hours_before
+-   custom_date_id
 
 #### parametros permitidos para sort
 
-- id
-- schedule
-- capacity
-- deadline_hour
-- custom_date_id
+-   id
+-   schedule
+-   capacity
+-   hours_before
+-   custom_date_id
 
 #### GET /api/v1/custom-schedules
 
@@ -403,27 +402,27 @@ Elimina un horario personalizado.
 
 #### campos fillables
 
-- name (required)
-- email (required)
-- phone (not required)
+-   name (required)
+-   email (required)
+-   phone (not required)
 
 #### parametros permitidos para included
 
-- reservations
+-   reservations
 
 #### parametros permitidos para filter
 
-- id
-- name
-- email
-- phone
+-   id
+-   name
+-   email
+-   phone
 
 #### parametros permitidos para sort
 
-- id
-- name
-- email
-- phone
+-   id
+-   name
+-   email
+-   phone
 
 #### GET /api/v1/customers
 
@@ -449,34 +448,34 @@ Elimina un cliente.
 
 #### campos fillables
 
-- amount_dollars (required)
-- amount_colones (required)
-- reservation_id (required)
-- payment_status_id (required)
+-   amount_dollars (required)
+-   amount_colones (required)
+-   reservation_id (required)
+-   payment_status_id (required)
 
 #### parametros permitidos para included
 
-- reservation
-- paymentStatus
-- payments
-- payments.paymentMethod
-- payments.paymentType
+-   reservation
+-   paymentStatus
+-   payments
+-   payments.paymentMethod
+-   payments.paymentType
 
 #### parametros permitidos para filter
 
-- id
-- amount_dollars
-- amount_colones
-- reservation_id
-- payment_status_id
+-   id
+-   amount_dollars
+-   amount_colones
+-   reservation_id
+-   payment_status_id
 
 #### parametros permitidos para sort
 
-- id
-- amount_dollars
-- amount_colones
-- reservation_id
-- payment_status_id
+-   id
+-   amount_dollars
+-   amount_colones
+-   reservation_id
+-   payment_status_id
 
 #### GET /api/v1/fees
 
@@ -502,26 +501,26 @@ Elimina una comisión.
 
 #### campos fillables
 
-- name (required)
-- guide_status_id (required)
+-   name (required)
+-   guide_status_id (required)
 
 #### parametros permitidos para included
 
-- guideStatus
-- tourGroups
-- tourGroups.reservations
+-   guideStatus
+-   tourGroups
+-   tourGroups.reservations
 
 #### parametros permitidos para filter
 
-- id
-- name
-- guide_status_id
+-   id
+-   name
+-   guide_status_id
 
 #### parametros permitidos para sort
 
-- id
-- name
-- guide_status_id
+-   id
+-   name
+-   guide_status_id
 
 #### GET /api/v1/guides
 
@@ -547,21 +546,21 @@ Elimina una guía.
 
 #### campos fillables
 
-- name (required)
+-   name (required)
 
 #### parametros permitidos para included
 
-- guides
+-   guides
 
 #### parametros permitidos para filter
 
-- id
-- name
+-   id
+-   name
 
 #### parametros permitidos para sort
 
-- id
-- name
+-   id
+-   name
 
 #### GET /api/v1/guide-statuses
 
@@ -587,45 +586,45 @@ Elimina un estado de guía.
 
 #### campos fillables
 
-- dollar_amount (required)
-- colones_amount (required)
-- payment_date (required)
-- path_file (not required)
-- payment_method_id (required)
-- payment_type_id (required)
-- paymentable_id (required)
-- paymentable_type (required)
+-   dollar_amount (required)
+-   colones_amount (required)
+-   payment_date (required)
+-   path_file (not required)
+-   payment_method_id (required)
+-   payment_type_id (required)
+-   paymentable_id (required)
+-   paymentable_type (required)
 
 #### parametros permitidos para included
 
-- paymentMethod
-- paymentType
-- paymentable
-- reservation
+-   paymentMethod
+-   paymentType
+-   paymentable
+-   reservation
 
 #### parametros permitidos para filter
 
-- id
-- dollar_amount
-- colones_amount
-- payment_date
-- path_file
-- payment_method_id
-- payment_type_id
-- paymentable_id
-- paymentable_type
+-   id
+-   dollar_amount
+-   colones_amount
+-   payment_date
+-   path_file
+-   payment_method_id
+-   payment_type_id
+-   paymentable_id
+-   paymentable_type
 
 #### parametros permitidos para sort
 
-- id
-- dollar_amount
-- colones_amount
-- payment_date
-- path_file
-- payment_method_id
-- payment_type_id
-- paymentable_id
-- paymentable_type
+-   id
+-   dollar_amount
+-   colones_amount
+-   payment_date
+-   path_file
+-   payment_method_id
+-   payment_type_id
+-   paymentable_id
+-   paymentable_type
 
 #### GET /api/v1/payments
 
@@ -651,21 +650,21 @@ Elimina un pago.
 
 #### campos fillables
 
-- name (required)
+-   name (required)
 
 #### parametros permitidos para included
 
-- payments
+-   payments
 
 #### parametros permitidos para filter
 
-- id
-- name
+-   id
+-   name
 
 #### parametros permitidos para sort
 
-- id
-- name
+-   id
+-   name
 
 #### GET /api/v1/payment-methods
 
@@ -691,23 +690,23 @@ Elimina un método de pago.
 
 #### campos fillables
 
-- name (required)
+-   name (required)
 
 #### parametros permitidos para included
 
-- fees
-- reservations
-- commissions
+-   fees
+-   reservations
+-   commissions
 
 #### parametros permitidos para filter
 
-- id
-- name
+-   id
+-   name
 
 #### parametros permitidos para sort
 
-- id
-- name
+-   id
+-   name
 
 #### GET /api/v1/payment-statuses
 
@@ -733,21 +732,21 @@ Elimina un estado de pago.
 
 #### campos fillables
 
-- name (required)
+-   name (required)
 
 #### parametros permitidos para included
 
-- payments
+-   payments
 
 #### parametros permitidos para filter
 
-- id
-- name
+-   id
+-   name
 
 #### parametros permitidos para sort
 
-- id
-- name
+-   id
+-   name
 
 #### GET /api/v1/payment-types
 
@@ -773,119 +772,119 @@ Elimina un tipo de pago.
 
 #### campos fillables
 
-- amount_adults (required)
-- amount_children (required)
-- amount_children_free (required)
-- total_price_dollars (required)
-- total_price_colones (required)
-- discount_dollars (required)
-- discount_colones (required)
-- taxes_dollars (required)
-- taxes_colones (required)
-- net_price_dollars (required)
-- net_price_colones (required)
-- invoice (not required)
-- comments (not required)
-- date (required)
-- adult_price_dollars (required)
-- adult_price_colones (required)
-- child_price_dollars (required)
-- child_price_colones (required)
-- schedule (required)
-- agency_id (required)
-- customer_id (required)
-- payment_status_id (required)
-- reservation_status_id (required)
-- tour_id (required)
-- tour_group_id (required)
-- user_id (required)
+-   amount_adults (required)
+-   amount_children (required)
+-   amount_children_free (required)
+-   total_price_dollars (required)
+-   total_price_colones (required)
+-   discount_dollars (required)
+-   discount_colones (required)
+-   taxes_dollars (required)
+-   taxes_colones (required)
+-   net_price_dollars (required)
+-   net_price_colones (required)
+-   invoice (not required)
+-   comments (not required)
+-   date (required)
+-   adult_price_dollars (required)
+-   adult_price_colones (required)
+-   child_price_dollars (required)
+-   child_price_colones (required)
+-   schedule (required)
+-   agency_id (required)
+-   customer_id (required)
+-   payment_status_id (required)
+-   reservation_status_id (required)
+-   tour_id (required)
+-   tour_group_id (required)
+-   user_id (required)
 
 #### parametros permitidos para included
 
-- agency
-- customer
-- paymentStatus
-- reservationStatus
-- tour
-- tourGroup
-- tourGroup.guide
-- tour.schedules
-- agency.tours
-- agency.agencyTours
-- agency.agencyTours.customDates
-- agency.agencyTours.customDates.customPrice
-- agency.agencyTours.customDates.customSchedules
-- payments
-- payments.paymentMethod
-- payments.paymentType
-- agencyData
-- fee
-- fee.payments
-- fee.paymentsStatus
-- commission
-- commission.payments
-- commission.paymentsStatus
-- user
+-   agency
+-   customer
+-   paymentStatus
+-   reservationStatus
+-   tour
+-   tourGroup
+-   tourGroup.guide
+-   tour.schedules
+-   agency.tours
+-   agency.agencyTours
+-   agency.agencyTours.customDates
+-   agency.agencyTours.customDates.customPrice
+-   agency.agencyTours.customDates.customSchedules
+-   payments
+-   payments.paymentMethod
+-   payments.paymentType
+-   agencyData
+-   fee
+-   fee.payments
+-   fee.paymentsStatus
+-   commission
+-   commission.payments
+-   commission.paymentsStatus
+-   user
 
 #### parametros permitidos para filter
 
-- id
-- amount_adults
-- amount_children
-- amount_children_free
-- total_price_dollars
-- total_price_colones
-- discount_dollars
-- discount_colones
-- taxes_dollars
-- taxes_colones
-- net_price_dollars
-- net_price_colones
-- invoice
-- comments
-- date
-- adult_price_dollars
-- adult_price_colones
-- child_price_dollars
-- child_price_colones
-- schedule
-- agency_id
-- customer_id
-- payment_status_id
-- reservation_status_id
-- tour_id
-- tour_group_id
-- user_id
+-   id
+-   amount_adults
+-   amount_children
+-   amount_children_free
+-   total_price_dollars
+-   total_price_colones
+-   discount_dollars
+-   discount_colones
+-   taxes_dollars
+-   taxes_colones
+-   net_price_dollars
+-   net_price_colones
+-   invoice
+-   comments
+-   date
+-   adult_price_dollars
+-   adult_price_colones
+-   child_price_dollars
+-   child_price_colones
+-   schedule
+-   agency_id
+-   customer_id
+-   payment_status_id
+-   reservation_status_id
+-   tour_id
+-   tour_group_id
+-   user_id
 
 #### parametros permitidos para sort
 
-- id
-- amount_adults
-- amount_children
-- amount_children_free
-- total_price_dollars
-- total_price_colones
-- discount_dollars
-- discount_colones
-- taxes_dollars
-- taxes_colones
-- net_price_dollars
-- net_price_colones
-- invoice
-- comments
-- date
-- adult_price_dollars
-- adult_price_colones
-- child_price_dollars
-- child_price_colones
-- schedule
-- agency_id
-- customer_id
-- payment_status_id
-- reservation_status_id
-- tour_id
-- tour_group_id
-- user_id
+-   id
+-   amount_adults
+-   amount_children
+-   amount_children_free
+-   total_price_dollars
+-   total_price_colones
+-   discount_dollars
+-   discount_colones
+-   taxes_dollars
+-   taxes_colones
+-   net_price_dollars
+-   net_price_colones
+-   invoice
+-   comments
+-   date
+-   adult_price_dollars
+-   adult_price_colones
+-   child_price_dollars
+-   child_price_colones
+-   schedule
+-   agency_id
+-   customer_id
+-   payment_status_id
+-   reservation_status_id
+-   tour_id
+-   tour_group_id
+-   user_id
 
 #### GET /api/v1/reservations
 
@@ -911,21 +910,21 @@ Elimina una reserva.
 
 #### campos fillables
 
-- name (required)
+-   name (required)
 
 #### parametros permitidos para included
 
-- reservations
+-   reservations
 
 #### parametros permitidos para filter
 
-- id
-- name
+-   id
+-   name
 
 #### parametros permitidos para sort
 
-- id
-- name
+-   id
+-   name
 
 #### GET /api/v1/reservation-statuses
 
@@ -951,21 +950,21 @@ Elimina un estado de reserva.
 
 #### campos fillables
 
-- name (required)
+-   name (required)
 
 #### parametros permitidos para included
 
-- users
+-   users
 
 #### parametros permitidos para filter
 
-- id
-- name
+-   id
+-   name
 
 #### parametros permitidos para sort
 
-- id
-- name
+-   id
+-   name
 
 #### GET /api/v1/roles
 
@@ -991,30 +990,30 @@ Elimina un rol.
 
 #### campos fillables
 
-- schedule (required)
-- capacity (required)
-- deadline_hour (required)
-- tour_id (required)
+-   schedule (required)
+-   capacity (required)
+-   hours_before (required)
+-   tour_id (required)
 
 #### parametros permitidos para included
 
-- tour
+-   tour
 
 #### parametros permitidos para filter
 
-- id
-- schedule
-- capacity
-- deadline_hour
-- tour_id
+-   id
+-   schedule
+-   capacity
+-   hours_before
+-   tour_id
 
 #### parametros permitidos para sort
 
-- id
-- schedule
-- capacity
-- deadline_hour
-- tour_id
+-   id
+-   schedule
+-   capacity
+-   hours_before
+-   tour_id
 
 #### GET /api/v1/schedules
 
@@ -1040,36 +1039,36 @@ Elimina un horario.
 
 #### campos fillables
 
-- name (required)
-- description (required)
-- path_image (required)
-- adult_price (required)
-- child_price (required)
+-   name (required)
+-   description (required)
+-   path_image (required)
+-   adult_price (required)
+-   child_price (required)
 
 #### parametros permitidos para included
 
-- schedules
-- agencyTours
-- agencies
-- reservations
+-   schedules
+-   agencyTours
+-   agencies
+-   reservations
 
 #### parametros permitidos para filter
 
-- id
-- name
-- description
-- path_image
-- adult_price
-- child_price
+-   id
+-   name
+-   description
+-   path_image
+-   adult_price
+-   child_price
 
 #### parametros permitidos para sort
 
-- id
-- name
-- description
-- path_image
-- adult_price
-- child_price
+-   id
+-   name
+-   description
+-   path_image
+-   adult_price
+-   child_price
 
 #### GET /api/v1/tours
 
@@ -1095,31 +1094,31 @@ Elimina un tour.
 
 #### campos fillables
 
-- name (required)
-- guide_id (required)
-- date (required)
-- schedule (required)
+-   name (required)
+-   guide_id (required)
+-   date (required)
+-   schedule (required)
 
 #### parametros permitidos para included
 
-- guide
-- reservations
+-   guide
+-   reservations
 
 #### parametros permitidos para filter
 
-- id
-- name
-- guide_id
-- date
-- schedule
+-   id
+-   name
+-   guide_id
+-   date
+-   schedule
 
 #### parametros permitidos para sort
 
-- id
-- name
-- guide_id
-- date
-- schedule
+-   id
+-   name
+-   guide_id
+-   date
+-   schedule
 
 #### GET /api/v1/tour-groups
 
@@ -1145,29 +1144,29 @@ Elimina un grupo de tours.
 
 #### campos fillables
 
-- name (required)
-- email (required)
-- password (required)
-- role_id (required)
+-   name (required)
+-   email (required)
+-   password (required)
+-   role_id (required)
 
 #### parametros permitidos para included
 
-- role
-- reservations
+-   role
+-   reservations
 
 #### parametros permitidos para filter
 
-- id
-- name
-- email
-- role_id
+-   id
+-   name
+-   email
+-   role_id
 
 #### parametros permitidos para sort
 
-- id
-- name
-- email
-- role_id
+-   id
+-   name
+-   email
+-   role_id
 
 #### GET /api/v1/users
 
@@ -1188,4 +1187,3 @@ Actualiza un usuario.
 #### DELETE /api/v1/users/{user}
 
 Elimina un usuario.
-

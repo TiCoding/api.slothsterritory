@@ -90,7 +90,7 @@ class CommissionController extends Controller
      */
     public function destroy(Commission $commission)
     {
-        $commission->softDeleted( $commission->id);
+        $commission->delete();
         return response()->json([
             'message' => 'Deleted successfully'
         ]);

@@ -17,7 +17,7 @@ class CreateCustomSchedulesTable extends Migration
             $table->id();
             $table->time('schedule');
             $table->integer('capacity');
-            $table->time('deadline_hour');
+            $table->integer('hours_before');
 
             $table->foreignId('custom_date_id')->constrained('custom_dates')->onDelete('restrict');
             $table->softDeletes();

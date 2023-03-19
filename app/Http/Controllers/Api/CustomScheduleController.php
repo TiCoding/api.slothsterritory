@@ -17,9 +17,9 @@ class CustomScheduleController extends Controller
     public function index()
     {
         $customSchedules = CustomSchedule::include()
-                            ->filter()
-                            ->sort()
-                            ->getOrPaginate();
+            ->filter()
+            ->sort()
+            ->getOrPaginate();
         return CustomScheduleResource::collection($customSchedules);
     }
 
@@ -34,7 +34,7 @@ class CustomScheduleController extends Controller
         $request->validate([
             'schedule' => 'required',
             'capacity' => 'required|integer',
-            'deadline_hour' => 'required',
+            'hours_before' => 'required|integer',
             'custom_date_id' => 'required|integer|exists:custom_dates,id|unique:custom_schedules',
         ]);
 
@@ -67,7 +67,7 @@ class CustomScheduleController extends Controller
         $request->validate([
             'schedule' => 'required',
             'capacity' => 'required|integer',
-            'deadline_hour' => 'required',
+            'hours_before' => 'required|integer',
             'custom_date_id' => 'required|integer|exists:custom_dates,id',
         ]);
 
@@ -84,7 +84,7 @@ class CustomScheduleController extends Controller
      */
     public function destroy(CustomSchedule $customSchedule)
     {
-        $customSchedule->softDeleted( $customSchedule->id);
+        $customSchedule->delete();
         return response()->json([
             'message' => 'Deleted successfully'
         ]);
