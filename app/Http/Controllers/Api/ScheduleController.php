@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\ScheduleResource;
 use App\Models\Schedule;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class ScheduleController extends Controller
 {
@@ -32,10 +33,16 @@ class ScheduleController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'schedule' => 'required|unique:schedules',
+            'schedule' => [
+                'required',
+                Rule::unique('schedules')->where(function ($query) use ($request) {
+                    return $query->where('tour_id', $request->tour_id)
+                         ->whereNull('deleted_at');
+                }),
+            ],
             'capacity' => 'required|integer',
             'hours_before' => 'required|integer',
-            'tour_id' => 'required|integer|exists:tour,id',
+            'tour_id' => 'required|integer|exists:tours,id',
         ]);
 
         $schedule = Schedule::create($request->all());
@@ -68,7 +75,7 @@ class ScheduleController extends Controller
             'schedule' => 'required|unique:schedules,schedule,' . $schedule->id,
             'capacity' => 'required|integer',
             'hours_before' => 'required|integer',
-            'tour_id' => 'required|integer|exists:tour,id',
+            'tour_id' => 'required|integer|exists:tours,id',
         ]);
 
         $schedule->update($request->all());
