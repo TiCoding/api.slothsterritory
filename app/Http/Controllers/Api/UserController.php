@@ -3,24 +3,25 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\GuideResource;
-use App\Models\Guide;
+use App\Http\Resources\UserResource;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
-class GuideController extends Controller
+class UserController extends Controller
 {
-    /**
+        /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        $guides = Guide::include()
+        $users = User::include()
                         ->filter()
                         ->sort()
                         ->getOrPaginate();
-        return GuideResource::collection($guides);
+        return UserResource::collection($users);
     }
 
     /**
@@ -33,54 +34,64 @@ class GuideController extends Controller
     {
         $request->validate([
             'name' => 'required|string',
-            'guide_status_id' =>    'required|integer|exists:guide_statuses,id',
+            'email' => 'required|string',
+            'password' => 'required|string',
+            'role_id' =>    'required|integer|exists:roles,id',
         ]);
 
-        $guide = Guide::create($request->all());
+        $password = Hash::make($request->password);
+        $request['password'] = $password;
 
-        return GuideResource::make($guide);
+        $user = User::create($request->all());
+
+        return UserResource::make($user);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Guide  $guide
+     * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        $guide = Guide::include()->findOrFail($id);
-        return GuideResource::make($guide);
+        $user = User::include()->findOrFail($id);
+        return UserResource::make($user);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Guide  $guide
+     * @param  \App\Models\Guide  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Guide $guide)
+    public function update(Request $request, User $user)
     {
         $request->validate([
             'name' => 'required|string',
-            'guide_status_id' => 'required|integer|exists:guide_statuses,id',
+            'email' => 'required|string',
         ]);
 
-        $guide->update($request->all());
+        if ($request->password) {
+            $password = Hash::make($request->password);
+            $request['password'] = $password;
+        }
 
-        return GuideResource::make($guide);
+        $user->update($request->all());
+
+        return UserResource::make($user);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Guide  $guide
+     * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Guide $guide)
+    public function destroy(User $user)
     {
-        $guide->delete();
+        $user->delete();
         return response()->json([
             'message' => 'Deleted successfully'
         ]);

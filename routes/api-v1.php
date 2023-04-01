@@ -23,6 +23,7 @@ use App\Http\Controllers\Api\RoleController;
 use App\Http\Controllers\Api\ScheduleController;
 use App\Http\Controllers\Api\TourController;
 use App\Http\Controllers\Api\TourGroupController;
+use App\Http\Controllers\Api\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -51,6 +52,7 @@ Route::middleware(['auth:api'])->group(function () {
     Route::apiResource('roles', RoleController::class)->names('api.v1.roles');
     Route::apiResource('schedules', ScheduleController::class)->names('api.v1.schedules');
     Route::apiResource('tours', TourController::class)->names('api.v1.tours');
+    Route::apiResource('users', UserController::class)->names('api.v1.users');
     Route::apiResource('tour-groups', TourGroupController::class)->names('api.v1.tour-groups');
 
 });
