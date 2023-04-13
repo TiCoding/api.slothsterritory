@@ -19,7 +19,7 @@ class Customer extends Model
     ];
 
     protected $allowInclude = [
-        'reservations',
+        'reservation',
     ];
 
     protected $allowFilter = [
@@ -39,8 +39,8 @@ class Customer extends Model
 
     // one to many relationship
 
-    public function reservations()
+    public function reservation()
     {
-        return $this->hasMany(Reservation::class);
+        return $this->hasOne(Reservation::class);
     }
 }
