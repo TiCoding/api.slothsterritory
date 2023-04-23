@@ -95,6 +95,11 @@ class Reservation extends Model
         'payment_status_id',
         'reservation_status_id',
         'tour_id',
+        'tour.name',
+        'customer.name',
+        'agency.name',
+        'reservationStatus.name',
+        'paymentStatus.name',
         'tour_group_id',
         'user_id',
     ];
