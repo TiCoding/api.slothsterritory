@@ -3,6 +3,7 @@
 namespace App\Traits;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Log;
 
 trait ApiTrait
 {
@@ -45,12 +46,27 @@ trait ApiTrait
                     // split relation name and attribute name
                     list($relation, $attribute) = explode('.', $filter);
                     // add filter to relation query
+                    Log::debug($relation);
+                    Log::debug($attribute);
+                    Log::debug('%' . $value . '%');
                     $query->orWhereHas($relation, function ($query) use ($attribute, $value) {
-                        $query->where($attribute, 'LIKE', '%' . $value . '%');
+                        $words = explode(" ", $value);
+                        foreach ($words as $index => $word) {
+                            $query->where($attribute, 'LIKE', '%' . $word . '%');
+                            if ($index < count($words) - 1) {
+                                $query->orWhere($attribute, 'LIKE', '%' . $word . '%');
+                            }
+                        }
                     });
                 } else {
                     // add filter to main query
-                    $query->orWhere($filter, 'LIKE', '%' . $value . '%');
+                    $words = explode(" ", $value);
+                    foreach ($words as $index => $word) {
+                        $query->orWhere($filter, 'LIKE', '%' . $word . '%');
+                        if ($index < count($words) - 1) {
+                            $query->orWhere($filter, 'LIKE', '%' . $word . '%');
+                        }
+                    }
                 }
             }
         }

@@ -48,6 +48,7 @@ Route::middleware(['auth:api'])->group(function () {
     Route::apiResource('payment-statuses', PaymentStatusController::class)->names('api.v1.payment-statuses');
     Route::apiResource('payment-types', PaymentTypeController::class)->names('api.v1.payment-types');
     Route::apiResource('reservations', ReservationController::class)->names('api.v1.reservations');
+    Route::post('reservations/send/{reservation}', [ReservationController::class, 'sendMail'])->name('send.reservation');
     Route::apiResource('reservation-statuses', ReservationStatusController::class)->names('api.v1.reservation-statuses');
     Route::apiResource('roles', RoleController::class)->names('api.v1.roles');
     Route::apiResource('schedules', ScheduleController::class)->names('api.v1.schedules');

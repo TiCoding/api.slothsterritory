@@ -4,8 +4,11 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ReservationResource;
+use App\Mail\ReservationMail;
 use App\Models\Reservation;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 
 class ReservationController extends Controller
 {
@@ -123,6 +126,43 @@ class ReservationController extends Controller
         $reservation->update($request->all());
 
         return ReservationResource::make($reservation);
+    }
+
+    /**
+     * send the specified resource to mail.
+     *
+     * @param  \App\Models\Reservation  $reservation
+     * @return \Illuminate\Http\Response
+     */
+    public function sendMail($id)
+    {
+        try {
+            //code...
+            $reservation = Reservation::with('tour', 'customer', 'agency')->findOrFail($id);
+
+            // Log::info($reservation['tour']['name']);
+            // Log::info($reservation['customer']['name']);
+            // Log::info($reservation['agency']['name']);
+            // Log::info($reservation['schedule']);
+            // Log::info($reservation['invoice']);
+            // Log::info($reservation['date']);
+            // Log::info($reservation['amount_adults']);
+            // Log::info($reservation['amount_children']);
+            // Log::info($reservation['amount_children_free']);
+            // Log::info($reservation['total_price_dollars']);
+            // Log::info($reservation->customer->email);
+
+            if ($reservation->customer->email) {
+                Mail::to($reservation->customer->email)->send(new ReservationMail($reservation));
+
+                return response(['mensaje' => 'correo enviado']);
+            }
+
+            return response(['mensaje' => 'correo de cliente no encontrado']);
+        } catch (\Throwable $th) {
+            Log::error($th);
+            throw $th;
+        }
     }
 
     /**
