@@ -43,12 +43,11 @@ trait ApiTrait
             if ($allowFilter->contains($filter)) {
                 // check if filter is a relation
                 if (strpos($filter, '.') !== false) {
+
                     // split relation name and attribute name
                     list($relation, $attribute) = explode('.', $filter);
+
                     // add filter to relation query
-                    Log::debug($relation);
-                    Log::debug($attribute);
-                    Log::debug('%' . $value . '%');
                     $query->orWhereHas($relation, function ($query) use ($attribute, $value) {
                         $words = explode(" ", $value);
                         foreach ($words as $index => $word) {
@@ -59,6 +58,7 @@ trait ApiTrait
                         }
                     });
                 } else {
+                    
                     // add filter to main query
                     $words = explode(" ", $value);
                     foreach ($words as $index => $word) {
@@ -108,6 +108,24 @@ trait ApiTrait
         }
 
         return $query->get();
+    }
+
+    // scope filter date
+    public function scopeFilterByDate( Builder $query){
+
+        if ( !request()->has('filterByDate') || empty($this->allowFilterByDate) ) {
+            return;
+        }
+
+        $filtersByDate = request('filterByDate');
+        $allowFilterByDate = collect($this->allowFilterByDate); // get allowed filters
+
+        foreach ($filtersByDate as $filter => $value) {
+            if ($allowFilterByDate->contains($filter)) {
+                $query->whereDate($filter, $value);
+            }
+        }
+
     }
 
 }

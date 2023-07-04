@@ -84,7 +84,7 @@ class Reservation extends Model
         'net_price_colones',
         'invoice',
         'comments',
-        'date',
+        // 'date',
         'adults_price_dollars',
         'adults_price_colones',
         'child_price_dollars',
@@ -133,6 +133,11 @@ class Reservation extends Model
         'tour_id',
         'tour_group_id',
         'user_id',
+    ];
+
+    // filterByDate
+    protected $allowFilterByDate = [
+        'date',
     ];
 
 

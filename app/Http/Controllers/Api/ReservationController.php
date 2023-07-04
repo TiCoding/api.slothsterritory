@@ -21,6 +21,7 @@ class ReservationController extends Controller
     {
         $reservations = Reservation::include()
                                     ->filter()
+                                    ->filterByDate()
                                     ->sort()
                                     ->getOrPaginate();
         return ReservationResource::collection($reservations);
