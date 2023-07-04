@@ -2,8 +2,11 @@
 
 namespace App\Traits;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
 
 trait ApiTrait
 {
@@ -58,7 +61,7 @@ trait ApiTrait
                         }
                     });
                 } else {
-                    
+
                     // add filter to main query
                     $words = explode(" ", $value);
                     foreach ($words as $index => $word) {
@@ -111,21 +114,29 @@ trait ApiTrait
     }
 
     // scope filter date
-    public function scopeFilterByDate( Builder $query){
+    public function scopeFilterByDate(Builder $query)
+    {
 
-        if ( !request()->has('filterByDate') || empty($this->allowFilterByDate) ) {
-            return;
+        if (!request()->has('filterByDate') || empty($this->allowFilterByDate)) {
+            return $query;
         }
 
         $filtersByDate = request('filterByDate');
         $allowFilterByDate = collect($this->allowFilterByDate); // get allowed filters
 
         foreach ($filtersByDate as $filter => $value) {
-            if ($allowFilterByDate->contains($filter)) {
-                $query->whereDate($filter, $value);
+            if ($allowFilterByDate->contains($filter) && strtotime($value) !== false) {
+                
+                // validate date
+                $validator = Validator::make(['date' => $value], [
+                    'date' => 'date_format:Y-m-d',
+                ]);
+
+                if ( !$validator->fails()) {
+                    $query->whereDate($filter, $value);
+                }
             }
         }
 
     }
-
 }
