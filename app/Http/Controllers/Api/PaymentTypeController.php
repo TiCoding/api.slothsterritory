@@ -32,7 +32,7 @@ class PaymentTypeController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|unique:pament_types'
+            'name' => 'required|unique:payment_types'
         ]);
 
         $paymentType = PaymentType::create($request->all());
@@ -61,8 +61,10 @@ class PaymentTypeController extends Controller
      */
     public function update(Request $request, PaymentType $paymentType)
     {
+        info('LEGA');
+        info($request->all());
         $request->validate([
-            'name' => 'required|unique:pament_types,name'.$paymentType->id
+            'name' => 'required|unique:payment_types,name,'.$paymentType->id
         ]);
 
         $paymentType->update($request->all());

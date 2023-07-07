@@ -62,7 +62,7 @@ class PaymentMethodController extends Controller
     public function update(Request $request, PaymentMethod $paymentMethod)
     {
         $request->validate([
-            'name' => 'required|unique:payment_methods,name' . $paymentMethod->name,
+            'name' => 'required|unique:payment_methods,name,' . $paymentMethod->name,
         ]);
 
         $paymentMethod->update($request->all());
