@@ -124,19 +124,29 @@ trait ApiTrait
         $filtersByDate = request('filterByDate');
         $allowFilterByDate = collect($this->allowFilterByDate); // get allowed filters
 
-        foreach ($filtersByDate as $filter => $value) {
-            if ($allowFilterByDate->contains($filter) && strtotime($value) !== false) {
-                
+        foreach ($filtersByDate as $filter => $values) {
+            $valuesArr = explode(",", $values);
+            if (
+                $allowFilterByDate->contains($filter) &&
+                count($valuesArr) == 2 &&
+                strtotime($valuesArr[0]) !== false &&
+                strtotime($valuesArr[1]) !== false
+            ) {
+
+                $startDate = $valuesArr[0];
+                $endDate = $valuesArr[1];
                 // validate date
-                $validator = Validator::make(['date' => $value], [
+                $startDateValidator = Validator::make(['date' => $startDate], [
+                    'date' => 'date_format:Y-m-d',
+                ]);
+                $endDateValidator = Validator::make(['date' => $endDate], [
                     'date' => 'date_format:Y-m-d',
                 ]);
 
-                if ( !$validator->fails()) {
-                    $query->whereDate($filter, $value);
+                if (!$startDateValidator->fails() && !$endDateValidator->fails()) {
+                    $query->whereBetween($filter, [$startDate, $endDate]);
                 }
             }
         }
-
     }
 }
