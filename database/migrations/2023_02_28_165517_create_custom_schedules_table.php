@@ -18,6 +18,8 @@ class CreateCustomSchedulesTable extends Migration
             $table->time('schedule');
             $table->integer('capacity');
             $table->integer('hours_before');
+            $table->decimal('adult_price', 8, 2);
+            $table->decimal('child_price', 8, 2);
 
             $table->foreignId('custom_date_id')->constrained('custom_dates')->onDelete('restrict');
             $table->softDeletes();

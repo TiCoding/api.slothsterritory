@@ -17,6 +17,8 @@ class CustomSchedule extends Model
         'capacity',
         'hours_before',
         'custom_date_id',
+        'adult_price',
+        'child_price',
     ];
 
     protected $allowInclude = [
@@ -29,6 +31,8 @@ class CustomSchedule extends Model
         'capacity',
         'hours_before',
         'custom_date_id',
+        'adult_price',
+        'child_price',
     ];
 
     protected $allowSort = [
@@ -37,6 +41,8 @@ class CustomSchedule extends Model
         'capacity',
         'hours_before',
         'custom_date_id',
+        'adult_price',
+        'child_price',
     ];
 
 

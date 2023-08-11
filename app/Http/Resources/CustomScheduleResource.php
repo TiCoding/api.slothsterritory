@@ -20,6 +20,8 @@ class CustomScheduleResource extends JsonResource
             'capacity' => $this->capacity,
             'hours_before' => $this->hours_before,
             'custom_date_id' => $this->custom_date_id,
+            'adult_price' => $this->adult_price,
+            'child_price' => $this->child_price,
             'customDate' => CustomDateResource::make($this->whenLoaded('customDate')),
         ];
     }

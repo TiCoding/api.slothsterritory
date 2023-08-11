@@ -31,12 +31,20 @@ class CustomScheduleController extends Controller
      */
     public function store(Request $request)
     {
+
+        info('CustomScheduleController@store');
+        info($request->all());
+
         $request->validate([
             'schedule' => 'required',
             'capacity' => 'required|integer',
             'hours_before' => 'required|integer',
             'custom_date_id' => 'required|integer|exists:custom_dates,id|unique:custom_schedules',
+            'adult_price' => 'required|numeric',
+            'child_price' => 'required|numeric',
         ]);
+
+        info('validated');
 
         $customSchedule = CustomSchedule::create($request->all());
 
@@ -69,6 +77,8 @@ class CustomScheduleController extends Controller
             'capacity' => 'required|integer',
             'hours_before' => 'required|integer',
             'custom_date_id' => 'required|integer|exists:custom_dates,id',
+            'adult_price' => 'required|numeric',
+            'child_price' => 'required|numeric',
         ]);
 
         $customSchedule->update($request->all());

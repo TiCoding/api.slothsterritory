@@ -19,6 +19,8 @@ class CustomScheduleFactory extends Factory
         $schedule = $this->faker->unique()->randomElement(['7:30', '8:30', '9:30', '10:30']);
         $capacity = $this->faker->randomElement([10, 20, 30]);
         $hoursBefore = 5;
+        $adultPrice = $this->faker->randomFloat(2, 1000, 5000);
+        $childPrice = $this->faker->randomFloat(2, 1000, 5000);
         $tour = Tour::all()->random();
         $customDate = CustomDate::all()->random();
 
@@ -27,6 +29,8 @@ class CustomScheduleFactory extends Factory
             'capacity' => $capacity,
             'hours_before' => $hoursBefore,
             'custom_date_id' => $customDate->id,
+            'adult_price' => $adultPrice,
+            'child_price' => $childPrice,
         ];
     }
 }

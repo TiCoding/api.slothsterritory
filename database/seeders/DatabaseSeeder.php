@@ -111,10 +111,10 @@ class DatabaseSeeder extends Seeder
 
 
         // CustomSchedule::factory(3)->create();
-        CustomSchedule::create(['schedule' => '8:00', 'capacity' => 20, 'hours_before' => 5, 'custom_date_id' => 4,]);
-        CustomSchedule::create(['schedule' => '9:00', 'capacity' => 20, 'hours_before' => 5, 'custom_date_id' => 4,]);
-        CustomSchedule::create(['schedule' => '10:00', 'capacity' => 20, 'hours_before' => 5, 'custom_date_id' => 4,]);
-        CustomSchedule::create(['schedule' => '11:00', 'capacity' => 20, 'hours_before' => 5, 'custom_date_id' => 2,]);
+        CustomSchedule::create(['schedule' => '8:00', 'capacity' => 20, 'hours_before' => 5, 'custom_date_id' => 4, 'adult_price' => 600, 'child_price' => 500,]);
+        CustomSchedule::create(['schedule' => '9:00', 'capacity' => 20, 'hours_before' => 5, 'custom_date_id' => 4, 'adult_price' => 600, 'child_price' => 500,]);
+        CustomSchedule::create(['schedule' => '10:00', 'capacity' => 20, 'hours_before' => 5, 'custom_date_id' => 4, 'adult_price' => 600, 'child_price' => 500,]);
+        CustomSchedule::create(['schedule' => '11:00', 'capacity' => 20, 'hours_before' => 5, 'custom_date_id' => 2, 'adult_price' => 600, 'child_price' => 500,]);
 
 
         // CustomPrice::factory(1)->create();
