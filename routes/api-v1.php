@@ -55,8 +55,5 @@ Route::middleware(['auth:api'])->group(function () {
     Route::apiResource('tours', TourController::class)->names('api.v1.tours');
     Route::apiResource('users', UserController::class)->names('api.v1.users');
     Route::apiResource('tour-groups', TourGroupController::class)->names('api.v1.tour-groups');
-
 });
-
-
-
+Route::get('tour-groups/find/{date}/{schedule}', [TourGroupController::class, 'findByDateAndSchedule'])->name('tour-groups.find');

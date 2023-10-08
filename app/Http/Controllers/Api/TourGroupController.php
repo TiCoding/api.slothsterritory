@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\TourGroupResource;
 use App\Models\TourGroup;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class TourGroupController extends Controller
 {
@@ -17,9 +18,9 @@ class TourGroupController extends Controller
     public function index()
     {
         $tourGroups = TourGroup::include()
-                                ->filter()
-                                ->sort()
-                                ->getOrPaginate();
+            ->filter()
+            ->sort()
+            ->getOrPaginate();
         return TourGroupResource::collection($tourGroups);
     }
 
@@ -34,7 +35,7 @@ class TourGroupController extends Controller
         $request->validate([
             'name' => 'required|string',
             'date' => 'required|date',
-            'schedule' => 'required|time',
+            'schedule' => 'required',
             'guide_id' => 'required|integer|exists:guides,id',
         ]);
 
@@ -53,6 +54,18 @@ class TourGroupController extends Controller
     {
         $tourGroup = TourGroup::include()->findOrFail($id);
         return TourGroupResource::make($tourGroup);
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\TourGroup  $tourGroup
+     * @return \Illuminate\Http\Response
+     */
+    public function findByDateAndSchedule($date, $schedule)
+    {
+        $tourGroup = TourGroup::include()->where('date', $date)->where('schedule', $schedule)->get();
+        return TourGroupResource::collection($tourGroup);
     }
 
     /**

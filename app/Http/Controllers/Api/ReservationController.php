@@ -7,8 +7,10 @@ use App\Http\Resources\ReservationResource;
 use App\Mail\ReservationMail;
 use App\Models\Reservation;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 
 class ReservationController extends Controller
 {
@@ -20,10 +22,10 @@ class ReservationController extends Controller
     public function index()
     {
         $reservations = Reservation::include()
-                                    ->filter()
-                                    ->filterByDate()
-                                    ->sort()
-                                    ->getOrPaginate();
+            ->filter()
+            ->filterByDate()
+            ->sort()
+            ->getOrPaginate();
         return ReservationResource::collection($reservations);
     }
 
@@ -61,9 +63,28 @@ class ReservationController extends Controller
             'reservation_status_id' => 'required|integer|exists:reservation_statuses,id',
             'tour_id' => 'required|integer|exists:tours,id',
             'tour_group_id' => 'required|integer|exists:tour_groups,id',
+            'attachment' => [
+                'sometimes',
+                'file',
+                function ($attribute, $value, $fail) use ($request) {
+                    if ($request->payment_status_id == 2 && !$value) {
+                        $fail("The $attribute field is required when payment status is payed.");
+                    }
+                },
+            ]
         ]);
 
-        $reservation = Reservation::create($request->all());
+        $data = $request->all();
+
+        $data['user_id'] = Auth::user()->id;
+
+        if ($request->hasFile('file')) {
+            $path = $request->file('file')->store('public/payments');
+            $url = Storage::url($path);
+            Log::info($url);
+        }
+
+        $reservation = Reservation::create($data);
 
         return ReservationResource::make($reservation);
     }
@@ -118,7 +139,7 @@ class ReservationController extends Controller
         ]);
 
         // check if update payment status and if this reservation has a payment
-        if($request->payment_status_id != $reservation->payment_status_id && $reservation->payment == null){ // TODO: pendiente validar que el nuevo estado es pagado
+        if ($request->payment_status_id != $reservation->payment_status_id && $reservation->payment == null) { // TODO: pendiente validar que el nuevo estado es pagado
             return response()->json([
                 'message' => 'No se puede cambiar el estado de pago de esta reservación porque no tiene un pago asociado'
             ], 400);
