@@ -5,7 +5,11 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ReservationResource;
 use App\Mail\ReservationMail;
+use App\Models\Payment;
+use App\Models\PaymentMethod;
+use App\Models\PaymentType;
 use App\Models\Reservation;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -79,9 +83,26 @@ class ReservationController extends Controller
         $data['user_id'] = Auth::user()->id;
 
         if ($request->hasFile('file')) {
-            $path = $request->file('file')->store('public/payments');
-            $url = Storage::url($path);
-            Log::info($url);
+            $url = Storage::disk('local')->put('payments', $request->file('file'));
+            $date = Carbon::createFromFormat('Y-m-d', '2022-12-03');
+
+            $paymentMethod = PaymentMethod::where('name', 'Tarjeta')->first();
+            $paymentType = PaymentType::where('name', 'Reserva')->first();
+
+            $payment = [
+                'dollar_amount' => $request->net_price_dollars,
+                'colones_amount' => $request->total_price_colones,
+                'payment_date' => $date->format('Y-m-d'),
+                'path_file' => $request->net_price_dollars,
+                'path_file' => $url,
+                'comments' => $request->comments,
+                'paymentable_id' => $request->net_price_dollars,
+                'paymentable_type' => $request->net_price_dollars,
+                'payment_method_id' => $paymentMethod->id,
+                'payment_type_id' => $paymentType->id,
+                'paymentable' => 'App\Models\Reservation'
+            ];
+            Payment::create($payment);
         }
 
         $reservation = Reservation::create($data);
