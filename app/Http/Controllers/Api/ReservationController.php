@@ -82,6 +82,8 @@ class ReservationController extends Controller
 
         $data['user_id'] = Auth::user()->id;
 
+        $reservation = Reservation::create($data);
+
         if ($request->hasFile('file')) {
             $url = Storage::disk('local')->put('payments', $request->file('file'));
             $date = Carbon::createFromFormat('Y-m-d', '2022-12-03');
@@ -93,19 +95,14 @@ class ReservationController extends Controller
                 'dollar_amount' => $request->net_price_dollars,
                 'colones_amount' => $request->total_price_colones,
                 'payment_date' => $date->format('Y-m-d'),
-                'path_file' => $request->net_price_dollars,
                 'path_file' => $url,
                 'comments' => $request->comments,
-                'paymentable_id' => $request->net_price_dollars,
-                'paymentable_type' => $request->net_price_dollars,
+                'paymentable_id' => $reservation->id,
                 'payment_method_id' => $paymentMethod->id,
                 'payment_type_id' => $paymentType->id,
-                'paymentable' => 'App\Models\Reservation'
             ];
             Payment::create($payment);
         }
-
-        $reservation = Reservation::create($data);
 
         return ReservationResource::make($reservation);
     }
