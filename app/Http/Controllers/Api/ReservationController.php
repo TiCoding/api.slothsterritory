@@ -12,6 +12,7 @@ use App\Models\Reservation;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
@@ -79,14 +80,14 @@ class ReservationController extends Controller
         ]);
 
         $data = $request->all();
-
         $data['user_id'] = Auth::user()->id;
-
+        $lastReservation = Reservation::orderBy('id', 'DESC')->first();
+        $data["invoice"] = "ST0000000" . $lastReservation->id + 1;
         $reservation = Reservation::create($data);
 
         if ($request->hasFile('file')) {
-            $url = Storage::disk('local')->put('payments', $request->file('file'));
-            $date = Carbon::createFromFormat('Y-m-d', '2022-12-03');
+            $url = Storage::disk('public')->put('payments', $request->file('file'));
+            $date = Carbon::now();
 
             $paymentMethod = PaymentMethod::where('name', 'Tarjeta')->first();
             $paymentType = PaymentType::where('name', 'Reserva')->first();
@@ -98,6 +99,7 @@ class ReservationController extends Controller
                 'path_file' => $url,
                 'comments' => $request->comments,
                 'paymentable_id' => $reservation->id,
+                'paymentable_type' => 'App\Models\Reservation',
                 'payment_method_id' => $paymentMethod->id,
                 'payment_type_id' => $paymentType->id,
             ];
@@ -154,10 +156,60 @@ class ReservationController extends Controller
             'reservation_status_id' => 'required|integer|exists:reservation_statuses,id',
             'tour_id' => 'required|integer|exists:tours,id',
             'tour_group_id' => 'required|integer|exists:tour_groups,id',
+            'attachment' => [
+                'sometimes',
+                'file',
+                function ($attribute, $value, $fail) use ($request) {
+                    if ($request->payment_status_id == 2 && !$value) {
+                        $fail("The $attribute field is required when payment status is payed.");
+                    }
+                },
+            ]
         ]);
 
+        if ($request->hasFile('file')) {
+
+            $currentPayment = Payment::where('paymentable_type', 'App\Models\Reservation')->where('paymentable_id', $reservation->id)->first();
+            $url = Storage::disk('public')->put('payments', $request->file('file'));
+            $date = Carbon::now();
+
+            if ($currentPayment) {
+                $currentPayment->dollar_amount = $request->net_price_dollars;
+                $currentPayment->colones_amount = $request->total_price_colones;
+                $currentPayment->payment_date = $request->$date->format('Y-m-d');
+                $currentPayment->path_file = $url;
+                $currentPayment->dollar_amount = $request->net_price_dollars;
+
+
+                $currentPayment->save();
+            } else {
+                $paymentMethod = PaymentMethod::where('name', 'Tarjeta')->first();
+                $paymentType = PaymentType::where('name', 'Reserva')->first();
+
+                $payment = [
+                    'dollar_amount' => $request->net_price_dollars,
+                    'colones_amount' => $request->total_price_colones,
+                    'payment_date' => $date->format('Y-m-d'),
+                    'path_file' => $url,
+                    'comments' => $request->comments,
+                    'paymentable_id' => $reservation->id,
+                    'paymentable_type' => 'App\Models\Reservation',
+                    'payment_method_id' => $paymentMethod->id,
+                    'payment_type_id' => $paymentType->id,
+                ];
+                Payment::create($payment);
+            }
+        }
+
+        Log::info($request->hasFile('file'));
+
+        Log::info($request);
+        Log::info($request->amount_adults);
+        Log::info($request->payment_status_id);
+        Log::info($reservation);
+
         // check if update payment status and if this reservation has a payment
-        if ($request->payment_status_id != $reservation->payment_status_id && $reservation->payment == null) { // TODO: pendiente validar que el nuevo estado es pagado
+        if ($request->payment_status_id != $reservation->payment_status_id && !$request->hasFile('file')) { // TODO: pendiente validar que el nuevo estado es pagado
             return response()->json([
                 'message' => 'No se puede cambiar el estado de pago de esta reservación porque no tiene un pago asociado'
             ], 400);

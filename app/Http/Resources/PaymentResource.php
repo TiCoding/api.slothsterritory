@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Storage;
 
 class PaymentResource extends JsonResource
 {
@@ -19,7 +20,7 @@ class PaymentResource extends JsonResource
             'dollar_amount' => $this->dollar_amount,
             'colones_amount' => $this->colones_amount,
             'payment_date' => $this->payment_date,
-            'path_file' => $this->path_file,
+            'path_file' => env('APP_URL') . Storage::url($this->path_file),
             'comments' => $this->comments,
             'payment_type_id' => $this->payment_type_id,
             'payment_method_id' => $this->payment_method_id,
