@@ -80,8 +80,8 @@ class TourGroupController extends Controller
         $request->validate([
             'name' => 'required|string',
             'date' => 'required|date',
-            'schedule' => 'required|time',
-            'guide_id' => 'required|integer|exists:guides,id' . $tourGroup->id,
+            'schedule' => 'required',
+            'guide_id' => 'required|integer|exists:guides,id',
         ]);
 
         $tourGroup->update($request->all());

@@ -87,7 +87,7 @@ class ReservationController extends Controller
 
         if ($request->hasFile('file')) {
             $url = Storage::disk('public')->put('payments', $request->file('file'));
-            $date = Carbon::now();
+            $date = date('Y-m-d');
 
             $paymentMethod = PaymentMethod::where('name', 'Tarjeta')->first();
             $paymentType = PaymentType::where('name', 'Reserva')->first();
@@ -95,7 +95,7 @@ class ReservationController extends Controller
             $payment = [
                 'dollar_amount' => $request->net_price_dollars,
                 'colones_amount' => $request->total_price_colones,
-                'payment_date' => $date->format('Y-m-d'),
+                'payment_date' => $date,
                 'path_file' => $url,
                 'comments' => $request->comments,
                 'paymentable_id' => $reservation->id,
@@ -171,16 +171,16 @@ class ReservationController extends Controller
 
             $currentPayment = Payment::where('paymentable_type', 'App\Models\Reservation')->where('paymentable_id', $reservation->id)->first();
             $url = Storage::disk('public')->put('payments', $request->file('file'));
-            $date = Carbon::now();
+            $date = date('Y-m-d');
 
             if ($currentPayment) {
                 $currentPayment->dollar_amount = $request->net_price_dollars;
                 $currentPayment->colones_amount = $request->total_price_colones;
-                $currentPayment->payment_date = $request->$date->format('Y-m-d');
+                $currentPayment->payment_date = Carbon::parse($request->$date)->format('Y-m-d');
                 $currentPayment->path_file = $url;
                 $currentPayment->dollar_amount = $request->net_price_dollars;
 
-
+                info('url: ' . $url);
                 $currentPayment->save();
             } else {
                 $paymentMethod = PaymentMethod::where('name', 'Tarjeta')->first();
@@ -189,7 +189,7 @@ class ReservationController extends Controller
                 $payment = [
                     'dollar_amount' => $request->net_price_dollars,
                     'colones_amount' => $request->total_price_colones,
-                    'payment_date' => $date->format('Y-m-d'),
+                    'payment_date' => $date,
                     'path_file' => $url,
                     'comments' => $request->comments,
                     'paymentable_id' => $reservation->id,
